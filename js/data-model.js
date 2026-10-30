@@ -32,7 +32,7 @@ window.CUN_GC_MODEL = {
         cargo: "Docente investigador"
       },
       {
-        nombre: "Mg. Laura Esperanza Gélvez García",
+        nombre: "PhD. Laura Esperanza Gélvez García",
         cargo: "Docente investigadora"
       },
       {
@@ -44,7 +44,7 @@ window.CUN_GC_MODEL = {
         cargo: "Docente investigadora"
       },
       {
-        nombre: "Mg. Wilson Bonilla Pabón",
+        nombre: "PhD. Wilson Bonilla Pabón",
         cargo: "Docente investigador"
       }
     ]

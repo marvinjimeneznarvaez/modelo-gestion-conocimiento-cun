@@ -1,7 +1,7 @@
 @echo off
 title Simulador Modelo de Gestion del Conocimiento - CUN
 echo ========================================================
-echo   Iniciando Simulador Modelo GC CUN (Laura E. Gelvez)
+echo   Iniciando Simulador Modelo GC CUN - Equipo de Investigacion
 echo ========================================================
 echo.
 cd /d "%~dp0"

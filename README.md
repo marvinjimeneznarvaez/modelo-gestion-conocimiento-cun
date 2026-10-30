@@ -11,10 +11,10 @@
 Modelo de gestión propuesto y desarrollado por los Investigadores Principales:
 
 * **PhD. (c) Marvin Luis Jiménez Narváez** · *Docente investigador*
-* **Mg. Laura Esperanza Gélvez García** · *Docente investigadora*
+* **PhD. Laura Esperanza Gélvez García** · *Docente investigadora*
 * **Mg. María Edelmira Lesmes Gómez** · *Docente investigadora*
 * **Mg. Luz Marina Escamilla Fonseca** · *Docente investigadora*
-* **Mg. Wilson Bonilla Pabón** · *Docente investigador*
+* **PhD. Wilson Bonilla Pabón** · *Docente investigador*
 
 ---
 
