@@ -400,7 +400,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "GAP",
             descripcionVisual: "Chispa ámbar parpadeante: representa una necesidad no resuelta en el entorno CUN."
           },
-          coords: { x: 90, y: 155 }
+          coords: { x: 90, y: 134 }
         },
         {
           etapa: "diagnostico",
@@ -409,78 +409,110 @@ window.CUN_GC_MODEL = {
           duracionDias: 3,
           acumuladoDias: 7,
           actores: "Dirección de Calidad Académica",
-          decision: "Los datos de retención confirman impacto crítico. Se formula formalmente el Reclamo KC-2026-01.",
+          decision: "Los datos de retención confirman impacto crítico. Se contrasta con retroalimentación de actores clave.",
+          particula: {
+            forma: "chispa-diamante",
+            color: "#38bdf8",
+            etiqueta: "GAP-IND",
+            descripcionVisual: "Tránsito por el eje de análisis de indicadores y retroalimentación bidireccional."
+          },
+          coords: { x: 220, y: 159 }
+        },
+        {
+          etapa: "diagnostico",
+          subnodoId: "sub-1-6",
+          subproceso: "1. Diagnóstico ➔ Formulación del Reclamo KC",
+          duracionDias: 2,
+          acumuladoDias: 9,
+          actores: "Mesa Técnica de Innovación CUN",
+          decision: "Se consolida el Reclamo de Conocimiento KC-2026-01 y se remite a la etapa de Producción.",
           particula: {
             forma: "chispa-diamante",
             color: "#38bdf8",
             etiqueta: "KC",
             descripcionVisual: "Chispa azul cian luminosa: la brecha se convirtió en un Reclamo de Conocimiento (KC)."
           },
-          coords: { x: 235, y: 180 }
+          coords: { x: 220, y: 305 }
         },
         {
           etapa: "produccion",
           subnodoId: "sub-2-1",
-          subproceso: "2. Producción ➔ Aprendizaje en Redes & Adquisición de Información",
-          duracionDias: 8,
+          subproceso: "2. Producción ➔ Aprendizaje en Redes & Trabajo Colaborativo",
+          duracionDias: 6,
           acumuladoDias: 15,
           actores: "Red Docente de Ingeniería y Humanidades CUN",
-          decision: "Mesas de co-creación para estructurar el modelo de interacción y límites éticos de la inteligencia artificial.",
+          decision: "Mesas de co-creación para estructurar el modelo de interacción y límites pedagógicos del asistente.",
           particula: {
             forma: "chispa-diamante",
             color: "#38bdf8",
             etiqueta: "KC",
             descripcionVisual: "Tránsito por redes de aprendizaje individual y grupal."
           },
-          coords: { x: 380, y: 145 }
+          coords: { x: 361, y: 133 }
+        },
+        {
+          etapa: "produccion",
+          subnodoId: "sub-2-3",
+          subproceso: "2. Producción ➔ Formulación de Reclamo (Nivel Bloom)",
+          duracionDias: 4,
+          acumuladoDias: 19,
+          actores: "Docentes Diseñadores Instruccionales",
+          decision: "Estructuración de competencias cognitivas y diseño de prompts pedagógicos contextualizados.",
+          particula: {
+            forma: "chispa-diamante",
+            color: "#38bdf8",
+            etiqueta: "KC-FORM",
+            descripcionVisual: "Formulación sistemática del reclamo para codificación."
+          },
+          coords: { x: 361, y: 204 }
         },
         {
           etapa: "produccion",
           subnodoId: "sub-2-4",
           subproceso: "2. Producción ➔ Codificación Documental (CKC)",
-          duracionDias: 6,
-          acumuladoDias: 21,
+          duracionDias: 4,
+          acumuladoDias: 23,
           actores: "Equipo Técnico de Innovación Educativa",
-          decision: "Se redacta el manual operativo, las guías de prompts y las rúbricas pedagógicas. Nace el CKC-01.",
+          decision: "Se redacta el manual operativo, rúbricas pedagógicas y arquitectura de software. Nace el CKC-01.",
           particula: {
             forma: "hexagono-tecnico",
             color: "#06b6d4",
             etiqueta: "CKC",
-            descripcionVisual: "MUTACIÓN: La partícula muta en un hexágono cian estructurado, simbolizando conocimiento explícito formalizado."
+            descripcionVisual: "MUTACIÓN: La partícula muta en un hexágono cian estructurado (Conocimiento Codificado)."
           },
-          coords: { x: 475, y: 185 }
+          coords: { x: 463, y: 204 }
         },
         {
           etapa: "produccion",
           subnodoId: "sub-2-5",
-          subproceso: "2. Producción ➔ Evaluación Interna en la Red",
+          subproceso: "2. Producción ➔ Evaluación Interna en la Red de Conocimiento",
           duracionDias: 3,
-          acumuladoDias: 24,
+          acumuladoDias: 26,
           actores: "Pares de la Comunidad de Práctica",
-          decision: "Validación de coherencia curricular. Veredicto interno favorable para someter a Comité Central.",
+          decision: "Validación dialógica interna. Veredicto colegiado favorable para someter a Comité McElroy.",
           particula: {
             forma: "hexagono-tecnico",
             color: "#0284c7",
             etiqueta: "CKC",
-            descripcionVisual: "Hexágono cian con aura activa de evaluación interna."
+            descripcionVisual: "Hexágono cian superando la pre-evaluación interna hacia Filtración."
           },
-          coords: { x: 475, y: 250 }
+          coords: { x: 529, y: 204 }
         },
         {
           etapa: "filtracion",
-          subnodoId: "sub-3-1",
-          subproceso: "3. Filtración ➔ Reposo en Compuerta de Evaluación del Comité (KCE)",
-          duracionDias: 10,
+          subnodoId: "sub-3-skc-info",
+          subproceso: "3. Filtración ➔ Entrada al Riel SKC de Evaluación (KCE)",
+          duracionDias: 8,
           acumuladoDias: 34,
           actores: "Comité de Evaluación de Investigaciones & Pares Externos",
-          decision: "El CKC reposa en el Comité McElroy: se auditan aspectos de privacidad de datos, soberanía tecnológica y viabilidad pedagógica.",
+          decision: "El CKC ingresa a la compuerta de evaluación: se auditan privacidad de datos y viabilidad pedagógica.",
           particula: {
             forma: "hexagono-tecnico",
             color: "#818cf8",
             etiqueta: "KCE",
-            descripcionVisual: "Reposo en la compuerta de filtración mientras el comité delibera."
+            descripcionVisual: "Reposo en la compuerta del riel superior de filtración mientras el comité delibera."
           },
-          coords: { x: 640, y: 145 }
+          coords: { x: 615, y: 126 }
         },
         {
           etapa: "filtracion",
@@ -489,54 +521,70 @@ window.CUN_GC_MODEL = {
           duracionDias: 4,
           acumuladoDias: 38,
           actores: "Presidencia del Comité de Evaluación",
-          decision: "Dictamen Favorable Unánime: Reclamo Superviviente (SKC). Superó todas las objeciones y avanza al nodo OK.",
+          decision: "Dictamen Favorable Unánime: Reclamo Superviviente (SKC). Superó todas las objeciones y avanza a validación formal.",
           particula: {
             forma: "escudo-esmeralda",
             color: "#10b981",
             etiqueta: "SKC",
-            descripcionVisual: "MUTACIÓN: Muta en un sello/escudo verde esmeralda resplandeciente (Superviviente certificado)."
+            descripcionVisual: "MUTACIÓN: Muta en un sello verde esmeralda resplandeciente (Superviviente certificado)."
           },
-          coords: { x: 745, y: 145 }
+          coords: { x: 695, y: 126 }
+        },
+        {
+          etapa: "filtracion",
+          subnodoId: "sub-3-val",
+          subproceso: "3. Filtración ➔ Rúbrica de Validación Institucional",
+          duracionDias: 1,
+          acumuladoDias: 39,
+          actores: "Secretaría Técnica del Comité",
+          decision: "Sello de cumplimiento normativo y metodológico. Se autoriza su paso hacia consolidación.",
+          particula: {
+            forma: "escudo-esmeralda",
+            color: "#10b981",
+            etiqueta: "SKC-VAL",
+            descripcionVisual: "Sello esmeralda validado transitando hacia el nodo OK."
+          },
+          coords: { x: 780, y: 126 }
         },
         {
           etapa: "filtracion",
           subnodoId: "sub-3-5",
           subproceso: "3. Filtración ➔ Consolidación de Veredicto (OK)",
           duracionDias: 1,
-          acumuladoDias: 39,
-          actores: "Secretaría Técnica",
-          decision: "El veredicto formal se rubrica como OK institucional para pasar de inmediato a la etapa de Integración.",
+          acumuladoDias: 40,
+          actores: "Dirección Nacional de Calidad",
+          decision: "El veredicto se consolida como OK institucional para ingresar de inmediato al bus de Integración.",
           particula: {
             forma: "escudo-esmeralda",
             color: "#10b981",
             etiqueta: "OK",
-            descripcionVisual: "Sello esmeralda atravesando el nodo OK hacia Integración."
+            descripcionVisual: "Sello OK institucional listo para integrarse a la memoria colectiva."
           },
-          coords: { x: 825, y: 185 }
+          coords: { x: 843, y: 166 }
         },
         {
           etapa: "integracion",
           subnodoId: "sub-4-1",
-          subproceso: "4. Integración ➔ Organizar (Catalogación & Taxonomía)",
+          subproceso: "4. Integración ➔ 1. Organizar (Catalogación & Taxonomía)",
           duracionDias: 3,
-          acumuladoDias: 42,
+          acumuladoDias: 43,
           actores: "Gestores Documentales de la DOKB",
           decision: "Catalogación con metadatos normalizados CUN, indexación temática y vinculación con asignaturas afines.",
           particula: {
             forma: "cubo-dorado",
             color: "#f59e0b",
             etiqueta: "COK",
-            descripcionVisual: "MUTACIÓN: Muta en un cubo/libro dorado de Conocimiento Organizacional Codificado (COK)."
+            descripcionVisual: "MUTACIÓN: Muta en un cubo dorado de Conocimiento Organizacional Codificado (COK)."
           },
-          coords: { x: 970, y: 130 }
+          coords: { x: 996, y: 128 }
         },
         {
           etapa: "integracion",
           subnodoId: "sub-4-2",
-          subproceso: "4. Integración ➔ Almacenar en Repositorio Protegido",
+          subproceso: "4. Integración ➔ 2. Almacenar en Bases Centralizadas",
           duracionDias: 2,
-          acumuladoDias: 44,
-          actores: "Administradores de Bases Centralizadas",
+          acumuladoDias: 45,
+          actores: "Administradores de Infraestructura TI",
           decision: "Alojamiento con alta disponibilidad, control de versiones y permisos de acceso para las sedes de la CUN.",
           particula: {
             forma: "cubo-dorado",
@@ -544,14 +592,14 @@ window.CUN_GC_MODEL = {
             etiqueta: "COK",
             descripcionVisual: "Cubo dorado resguardado en la infraestructura central."
           },
-          coords: { x: 970, y: 180 }
+          coords: { x: 996, y: 174 }
         },
         {
           etapa: "integracion",
           subnodoId: "sub-4-3",
-          subproceso: "4. Integración ➔ Transferencia (Capacitación a Escala)",
-          duracionDias: 12,
-          acumuladoDias: 56,
+          subproceso: "4. Integración ➔ 3. Transferencia (Mentorías & Talleres)",
+          duracionDias: 10,
+          acumuladoDias: 55,
           actores: "Líderes de Redes & 450 Docentes Capacitados",
           decision: "Talleres sincrónicos, cápsulas de microlearning y mentorías directas para asegurar la apropiación práctica.",
           particula: {
@@ -560,30 +608,30 @@ window.CUN_GC_MODEL = {
             etiqueta: "COK",
             descripcionVisual: "Cubo dorado emitiendo pulsos de transferencia formativa hacia los docentes."
           },
-          coords: { x: 970, y: 230 }
+          coords: { x: 996, y: 220 }
         },
         {
           etapa: "integracion",
           subnodoId: "sub-4-4",
-          subproceso: "4. Integración ➔ Divulgación & Endomarketing",
+          subproceso: "4. Integración ➔ 4. Divulgación & Endomarketing",
           duracionDias: 4,
-          acumuladoDias: 60,
+          acumuladoDias: 59,
           actores: "Comunicaciones & Branding Institucional",
           decision: "Campaña de difusión interna para incentivar a docentes y estudiantes al uso del asistente.",
           particula: {
             forma: "cubo-dorado",
             color: "#f59e0b",
             etiqueta: "COK",
-            descripcionVisual: "Diseminación a través de los canales institucionales."
+            descripcionVisual: "Diseminación a través de canales institucionales y bus colector hacia DOKB."
           },
-          coords: { x: 970, y: 280 }
+          coords: { x: 996, y: 266 }
         },
         {
           etapa: "integracion",
-          subnodoId: "sub-4-5",
+          subnodoId: "svg-dokb-node",
           subproceso: "4. Integración ➔ Asentamiento Permanente en DOKB",
           duracionDias: 2,
-          acumuladoDias: 62,
+          acumuladoDias: 61,
           actores: "Comité de Gestión del Conocimiento",
           decision: "El COK-IA-01 queda formalmente depositado en el contenedor de Manuales y Tecnologías de la DOKB.",
           particula: {
@@ -592,23 +640,23 @@ window.CUN_GC_MODEL = {
             etiqueta: "DOKB",
             descripcionVisual: "MUTACIÓN FINAL: La partícula se asienta en la DOKB y genera ondas expansivas doradas en el repositorio institucional."
           },
-          coords: { x: 970, y: 460 }
+          coords: { x: 1007, y: 417 }
         },
         {
           etapa: "retroalimentacion",
           subnodoId: "retro-experiencial",
           subproceso: "Retroalimentación Sistémica ➔ Flujo Experiencial hacia Diagnóstico",
           duracionDias: 0,
-          acumuladoDias: 62,
+          acumuladoDias: 61,
           actores: "Ecosistema Institucional CUN",
-          decision: "¡CICLO CERRADO! El conocimiento acumulado en la DOKB retroalimenta el Diagnóstico: reduce tiempos de respuesta en 75% e impulsa nuevas líneas de innovación.",
+          decision: "¡CICLO CERRADO! El conocimiento acumulado en la DOKB nutre continuamente el Diagnóstico, reduciendo tiempos de respuesta y abriendo nuevas líneas de innovación.",
           particula: {
             forma: "pulso-retorno",
             color: "#fbbf24",
             etiqueta: "RETRO",
             descripcionVisual: "Flujo activo continuo de experiencia retornando desde la DOKB hasta el Diagnóstico por el ducto inferior."
           },
-          coords: { x: 140, y: 310 }
+          coords: { x: 85, y: 345 }
         }
       ]
     },
@@ -634,45 +682,61 @@ window.CUN_GC_MODEL = {
             etiqueta: "GAP",
             descripcionVisual: "Chispa ámbar inicial de brecha detectada."
           },
-          coords: { x: 90, y: 155 }
+          coords: { x: 90, y: 134 }
         },
         {
           etapa: "diagnostico",
           subnodoId: "sub-1-5",
-          subproceso: "1. Diagnóstico ➔ Retroalimentación de Stakeholders & Formulación KC",
+          subproceso: "1. Diagnóstico ➔ Retroalimentación de Stakeholders",
           duracionDias: 3,
           acumuladoDias: 8,
           actores: "Empresas aliadas y Dirección de Prácticas",
-          decision: "Empresas apoyan validar funciones laborales. Se formula el Reclamo KC-2026-02.",
+          decision: "Empresas apoyan validar funciones laborales. Se contrasta con necesidades de acreditación institucional.",
+          particula: {
+            forma: "chispa-diamante",
+            color: "#38bdf8",
+            etiqueta: "STAKE",
+            descripcionVisual: "Consulta con stakeholders del sector productivo."
+          },
+          coords: { x: 220, y: 239 }
+        },
+        {
+          etapa: "diagnostico",
+          subnodoId: "sub-1-6",
+          subproceso: "1. Diagnóstico ➔ Formulación del Reclamo KC",
+          duracionDias: 2,
+          acumuladoDias: 10,
+          actores: "Coordinación de Empleabilidad",
+          decision: "Se formula formalmente el Reclamo KC-2026-02 hacia la etapa de Producción.",
           particula: {
             forma: "chispa-diamante",
             color: "#38bdf8",
             etiqueta: "KC",
-            descripcionVisual: "Chispa cian: Reclamo de conocimiento formulado."
+            descripcionVisual: "Chispa azul cian: Reclamo de conocimiento formulado."
           },
-          coords: { x: 235, y: 180 }
+          coords: { x: 220, y: 305 }
         },
         {
           etapa: "produccion",
-          subnodoId: "sub-2-1",
-          subproceso: "2. Producción ➔ Trabajo Colaborativo en Red",
+          subnodoId: "sub-2-3",
+          subproceso: "2. Producción ➔ Formulación de Reclamo & Tabla de Equivalencias",
           duracionDias: 9,
-          acumuladoDias: 17,
+          acumuladoDias: 19,
           actores: "Comité de Prácticas y Líderes de Programa",
-          decision: "Estructuración de tabla de equivalencias entre perfiles de cargo corporativos y resultados de aprendizaje curriculares.",
+          decision: "Estructuración de tabla de equivalencias entre perfiles de cargo corporativos y resultados curriculares.",
           particula: {
             forma: "chispa-diamante",
             color: "#38bdf8",
             etiqueta: "KC",
-            descripcionVisual: "Tránsito por aprendizaje y discusión grupal."
+            descripcionVisual: "Tránsito por discusión y formulación pedagógica."
           },
-          coords: { x: 380, y: 145 }
+          coords: { x: 361, y: 204 }
         },
         {
           etapa: "produccion",
           subnodoId: "sub-2-4",
           subproceso: "2. Producción ➔ Codificación Documental (CKC)",
-          duracionDias: 7,
+          duracionDias: 5,
           acumuladoDias: 24,
           actores: "Coordinación de Empleabilidad",
           decision: "Se formaliza el documento preliminar de equivalencias y procedimiento de validación (CKC-02).",
@@ -682,94 +746,110 @@ window.CUN_GC_MODEL = {
             etiqueta: "CKC",
             descripcionVisual: "MUTACIÓN: La partícula muta en un hexágono cian estructurado."
           },
-          coords: { x: 475, y: 185 }
+          coords: { x: 463, y: 204 }
         },
         {
           etapa: "filtracion",
-          subnodoId: "sub-3-1",
-          subproceso: "3. Filtración ➔ Reposo en Comité de Evaluación",
-          duracionDias: 12,
-          acumuladoDias: 36,
+          subnodoId: "sub-3-ukc-info",
+          subproceso: "3. Filtración ➔ Entrada al Riel UKC de Evaluación",
+          duracionDias: 10,
+          acumuladoDias: 34,
           actores: "Comité Institucional de Currículo y Calidad",
-          decision: "El Comité delibera: existe riesgo de laxitud si la empresa aliada no certifica bajo gravedad de juramento las funciones del practicante.",
+          decision: "El Comité delibera: existe riesgo de laxitud si la empresa aliada no certifica bajo gravedad de juramento las funciones.",
           particula: {
             forma: "hexagono-tecnico",
             color: "#818cf8",
             etiqueta: "KCE",
-            descripcionVisual: "Reposo en deliberación del comité evaluador."
+            descripcionVisual: "Ingreso al riel intermedio de filtración para reclamos en deliberación."
           },
-          coords: { x: 640, y: 195 }
+          coords: { x: 615, y: 191 }
         },
         {
           etapa: "filtracion",
           subnodoId: "sub-3-3",
           subproceso: "3. Filtración ➔ Dictamen Indeciso (UKC) con Plazo",
           duracionDias: 3,
-          acumuladoDias: 39,
+          acumuladoDias: 37,
           actores: "Comité de Gestión del Conocimiento",
           decision: "Dictamen: UKC (Indeciso). Se otorga plazo de 30 días para incorporar rúbricas de verificación in situ con empleadores y auditorías aleatorias.",
           particula: {
             forma: "rombo-purpura",
             color: "#c084fc",
             etiqueta: "UKC",
-            descripcionVisual: "MUTACIÓN: Muta en un rombo púrpura pulsante de alerta (Reclamo Indeciso en observación)."
+            descripcionVisual: "MUTACIÓN: Muta en un rombo púrpura pulsante de alerta (Reclamo Indeciso en observación con plazo perentorio)."
           },
-          coords: { x: 745, y: 195 }
+          coords: { x: 695, y: 191 }
         },
         {
           etapa: "filtracion",
-          subnodoId: "sub-3-3",
+          subnodoId: "sub-3-depuracion",
           subproceso: "3. Filtración ➔ Bucle de Depuración & Refinamiento",
           duracionDias: 25,
-          acumuladoDias: 64,
+          acumuladoDias: 62,
           actores: "Equipo Proponente y Jurídica CUN",
           decision: "Se subsanan todas las observaciones: se crea la plataforma digital de firma conjunta empresa-docente tutor.",
           particula: {
             forma: "rombo-purpura",
             color: "#a855f7",
-            etiqueta: "UKC-DEP",
-            descripcionVisual: "Tránsito por el lazo de depuración metodológica."
+            etiqueta: "DEPURA",
+            descripcionVisual: "Tránsito por el lazo de depuración metodológica retornando a la red con plazo."
           },
-          coords: { x: 690, y: 220 }
+          coords: { x: 783, y: 210 }
+        },
+        {
+          etapa: "filtracion",
+          subnodoId: "sub-3-eval-pos",
+          subproceso: "3. Filtración ➔ Segunda Evaluación Favorable",
+          duracionDias: 3,
+          acumuladoDias: 65,
+          actores: "Comité de Calidad",
+          decision: "Las nuevas salvaguardas satisfacen plenamente al Comité. Dictamen: Evaluación Positiva tras depuración.",
+          particula: {
+            forma: "escudo-esmeralda",
+            color: "#10b981",
+            etiqueta: "EV-POS",
+            descripcionVisual: "MUTACIÓN: El reclamo depurado supera la prueba y muta a convalidación verde."
+          },
+          coords: { x: 783, y: 167 }
         },
         {
           etapa: "filtracion",
           subnodoId: "sub-3-5",
-          subproceso: "3. Filtración ➔ Segunda Evaluación Favorable (OK)",
-          duracionDias: 4,
-          acumuladoDias: 68,
-          actores: "Comité de Calidad",
-          decision: "Las nuevas salvaguardas satisfacen plenamente al Comité. Veredicto: APROBADO (Pasa al nodo OK como conocimiento confiable).",
+          subproceso: "3. Filtración ➔ Consolidación de Veredicto (OK)",
+          duracionDias: 1,
+          acumuladoDias: 66,
+          actores: "Secretaría General CUN",
+          decision: "Veredicto formal: APROBADO (OK). Pasa al paquete de conocimiento consolidado para Integración.",
           particula: {
             forma: "escudo-esmeralda",
             color: "#10b981",
             etiqueta: "OK",
-            descripcionVisual: "MUTACIÓN: El reclamo depurado se convalida y muta a sello verde para avanzar a Integración."
+            descripcionVisual: "Veredicto consolidado OK hacia Integración."
           },
-          coords: { x: 825, y: 185 }
+          coords: { x: 843, y: 166 }
         },
         {
           etapa: "integracion",
-          subnodoId: "sub-4-1",
-          subproceso: "4. Integración ➔ Organizar y Almacenar en DOKB",
-          duracionDias: 6,
-          acumuladoDias: 74,
+          subnodoId: "svg-dokb-node",
+          subproceso: "4. Integración ➔ Incorporación en la DOKB",
+          duracionDias: 5,
+          acumuladoDias: 71,
           actores: "Dirección de Prácticas y Registros",
           decision: "Codificado como Política y Procedimiento Institucional de Homologación Laboral en la DOKB.",
           particula: {
             forma: "cubo-dorado",
             color: "#f59e0b",
             etiqueta: "COK",
-            descripcionVisual: "Muta a cubo dorado y se incorpora en la base distribuida."
+            descripcionVisual: "Muta a cubo dorado y se incorpora en el repositorio institucional permanente."
           },
-          coords: { x: 970, y: 460 }
+          coords: { x: 1007, y: 417 }
         },
         {
           etapa: "retroalimentacion",
           subnodoId: "retro-experiencial",
           subproceso: "Retroalimentación Sistémica ➔ Retorno al Diagnóstico",
           duracionDias: 0,
-          acumuladoDias: 74,
+          acumuladoDias: 71,
           actores: "Sistema General CUN",
           decision: "La experiencia de homologación nutre el diagnóstico de egresados y abre nuevas alianzas estratégicas empresariales.",
           particula: {
@@ -778,7 +858,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "RETRO",
             descripcionVisual: "Ondas doradas fluyendo por el retorno experiencial hacia el Diagnóstico."
           },
-          coords: { x: 140, y: 310 }
+          coords: { x: 85, y: 345 }
         }
       ]
     },
@@ -797,14 +877,14 @@ window.CUN_GC_MODEL = {
           duracionDias: 4,
           acumuladoDias: 4,
           actores: "Gerencia Financiera",
-          decision: "Incremento en costos de facturación de servicios en la nube genera alerta presupuestal.",
+          decision: "Incremento en facturación de servicios en la nube genera alerta presupuestal.",
           particula: {
             forma: "chispa-diamante",
             color: "#f59e0b",
             etiqueta: "GAP",
             descripcionVisual: "Chispa ámbar: alerta presupuestal detectada."
           },
-          coords: { x: 90, y: 155 }
+          coords: { x: 90, y: 134 }
         },
         {
           etapa: "diagnostico",
@@ -820,12 +900,12 @@ window.CUN_GC_MODEL = {
             etiqueta: "KC",
             descripcionVisual: "Chispa azul cian: reclamo de infraestructura formulado."
           },
-          coords: { x: 235, y: 180 }
+          coords: { x: 220, y: 305 }
         },
         {
           etapa: "produccion",
           subnodoId: "sub-2-2",
-          subproceso: "2. Producción ➔ Vigilancia Tecnológica & Cotizaciones",
+          subproceso: "2. Producción ➔ Adquisición de Información Técnica & Cotizaciones",
           duracionDias: 8,
           acumuladoDias: 15,
           actores: "Equipo Técnico de TI",
@@ -834,9 +914,9 @@ window.CUN_GC_MODEL = {
             forma: "chispa-diamante",
             color: "#38bdf8",
             etiqueta: "KC",
-            descripcionVisual: "Tránsito por investigación de mercado y cotizaciones."
+            descripcionVisual: "Tránsito por investigación técnica de mercado y cotizaciones."
           },
-          coords: { x: 380, y: 145 }
+          coords: { x: 361, y: 275 }
         },
         {
           etapa: "produccion",
@@ -852,30 +932,30 @@ window.CUN_GC_MODEL = {
             etiqueta: "CKC",
             descripcionVisual: "MUTACIÓN: Muta en hexágono cian estructurado de anteproyecto técnico."
           },
-          coords: { x: 475, y: 185 }
+          coords: { x: 463, y: 204 }
         },
         {
           etapa: "filtracion",
-          subnodoId: "sub-3-1",
-          subproceso: "3. Filtración ➔ Reposo en Comité de Evaluación",
-          duracionDias: 14,
-          acumuladoDias: 34,
+          subnodoId: "sub-3-fkc-info",
+          subproceso: "3. Filtración ➔ Ingreso al Riel FKC de Evaluación",
+          duracionDias: 12,
+          acumuladoDias: 32,
           actores: "Comité Técnico de Ciberseguridad & Riesgos CUN",
-          decision: "Reposo en auditoría exhaustiva: el comité evalúa contingencias eléctricas, duplicidad de enlaces y costos de refrigeración 24/7.",
+          decision: "Reposo en auditoría exhaustiva: el comité evalúa contingencias eléctricas, enlaces redundantes y refrigeración 24/7.",
           particula: {
             forma: "hexagono-tecnico",
             color: "#818cf8",
             etiqueta: "KCE",
-            descripcionVisual: "Reposo en evaluación rigurosa del comité técnico."
+            descripcionVisual: "Reposo en evaluación rigurosa en el riel inferior de filtración."
           },
-          coords: { x: 640, y: 260 }
+          coords: { x: 615, y: 271 }
         },
         {
           etapa: "filtracion",
           subnodoId: "sub-3-4",
           subproceso: "3. Filtración ➔ Dictamen de Falsación (FKC)",
           duracionDias: 4,
-          acumuladoDias: 38,
+          acumuladoDias: 36,
           actores: "Comité de Gestión del Conocimiento",
           decision: "Dictamen Negativo Vinculante: FALSADO (FKC). El costo de mantenimiento, personal 24/7 y riesgo de caída supera en 300% el ahorro previsto.",
           particula: {
@@ -884,39 +964,55 @@ window.CUN_GC_MODEL = {
             etiqueta: "FKC",
             descripcionVisual: "MUTACIÓN: Muta en un octágono carmesí con icono de alerta (Reclamo Falsado / Refutado)."
           },
-          coords: { x: 745, y: 260 }
+          coords: { x: 695, y: 271 }
         },
         {
           etapa: "filtracion",
-          subnodoId: "sub-3-4",
-          subproceso: "3. Filtración ➔ Almacenamiento de Evidencia en DOKB",
+          subnodoId: "sub-3-almacen-fkc",
+          subproceso: "3. Filtración ➔ Almacenamiento de Evidencia de Falsación",
           duracionDias: 3,
-          acumuladoDias: 41,
+          acumuladoDias: 39,
           actores: "Auditoría de Procesos",
-          decision: "PRINCIPIO MCELROY: NO SE BORRA LA INICIATIVA. Se documenta formalmente en el repositorio de Lecciones Aprendidas de la DOKB con toda la matriz de costos.",
+          decision: "PRINCIPIO MCELROY: NO SE BORRA LA INICIATIVA. Se documenta formalmente la matriz de costos y riesgos.",
           particula: {
             forma: "archivo-leccion",
             color: "#dc2626",
             etiqueta: "LECCIÓN",
-            descripcionVisual: "La partícula carmesí se almacena en el módulo de Lecciones Aprendidas de la DOKB para salvaguardar la memoria institucional."
+            descripcionVisual: "La partícula carmesí se prepara para archivarse en el módulo de Lecciones Aprendidas de la DOKB."
           },
-          coords: { x: 970, y: 460 }
+          coords: { x: 785, y: 271 }
+        },
+        {
+          etapa: "integracion",
+          subnodoId: "svg-dokb-node",
+          subproceso: "Integración / DOKB ➔ Depósito en Módulo de Lecciones Aprendidas",
+          duracionDias: 2,
+          acumuladoDias: 41,
+          actores: "Gestores Documentales DOKB",
+          decision: "El reclamo falsado queda archivado en el contenedor FKC de la DOKB para evitar repetir errores costosos en el futuro.",
+          particula: {
+            forma: "archivo-leccion",
+            color: "#dc2626",
+            etiqueta: "FKC-DOKB",
+            descripcionVisual: "Asentamiento permanente en el repositorio de lecciones refutadas de la DOKB."
+          },
+          coords: { x: 1092, y: 421 }
         },
         {
           etapa: "retroalimentacion",
-          subnodoId: "retro-problemas",
-          subproceso: "Retroalimentación Sistémica ➔ Alerta Temprana hacia Diagnóstico",
+          subnodoId: "svg-ambiente-procesamiento",
+          subproceso: "Retroalimentación Sistémica ➔ Detección de Problemas hacia Diagnóstico",
           duracionDias: 0,
           acumuladoDias: 41,
-          actores: "Sistema General CUN",
-          decision: "La lección aprendida retroalimenta el Diagnóstico: previene futuras compras redundantes y redirige el esfuerzo hacia esquemas de optimización multicloud.",
+          actores: "Ambiente de Procesamiento CUN",
+          decision: "La lección aprendida retroalimenta el Diagnóstico: previene futuras compras redundantes y redirige el esfuerzo hacia esquemas multicloud.",
           particula: {
             forma: "pulso-alerta",
             color: "#f87171",
             etiqueta: "ALERTA",
             descripcionVisual: "Flujo de advertencia de lección aprendida retornando al Diagnóstico para evitar tropiezos repetidos."
           },
-          coords: { x: 140, y: 310 }
+          coords: { x: 85, y: 345 }
         }
       ]
     }

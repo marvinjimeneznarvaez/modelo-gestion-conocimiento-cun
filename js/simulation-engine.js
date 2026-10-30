@@ -1,7 +1,8 @@
 /**
  * SIMULATION & ARCHITECTURE ENGINE - CUN MODELO DE GESTIÓN DEL CONOCIMIENTO
- * Renderiza el mapa arquitectónico completo con todos sus recuadros, flujos internos,
- * conectores, retroalimentaciones y anima el tránsito de reclamos con mutación visual.
+ * Corporación Unificada Nacional CUN · Dirección Nacional de Investigación
+ * Renderiza fielmente la arquitectura con todos sus recuadros, flujos internos,
+ * flechas bidireccionales, colectores y lazo cerrado de retroalimentación.
  */
 
 class KnowledgeSimulationEngine {
@@ -10,7 +11,7 @@ class KnowledgeSimulationEngine {
     this.svg = document.getElementById(svgId);
     this.liveCard = document.getElementById(liveCardId);
     this.isSimulationMode = isSimulationMode;
-    this.pfx = svgId + "-"; // Prefijo único para evitar colisiones de ID entre SVGs
+    this.pfx = svgId + "-"; // Prefijo único para evitar colisiones de ID entre instancias SVG
 
     this.currentCase = window.CUN_GC_MODEL.casosSimulacion[0];
     this.currentStepIndex = 0;
@@ -39,72 +40,74 @@ class KnowledgeSimulationEngine {
   renderArchitectureSvg() {
     if (!this.svg) return;
 
+    const p = this.pfx;
+
     this.svg.innerHTML = `
       <defs>
         <!-- Filtros Glow Neón -->
-        <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+        <filter id="${p}glow-cyan" x="-25%" y="-25%" width="150%" height="150%">
           <feGaussianBlur stdDeviation="3.5" result="blur" />
           <feComposite in="SourceGraphic" in2="blur" operator="over" />
         </filter>
-        <filter id="glow-gold" x="-20%" y="-20%" width="140%" height="140%">
+        <filter id="${p}glow-gold" x="-25%" y="-25%" width="150%" height="150%">
           <feGaussianBlur stdDeviation="4.5" result="blur" />
           <feComposite in="SourceGraphic" in2="blur" operator="over" />
         </filter>
-        <filter id="glow-emerald" x="-20%" y="-20%" width="140%" height="140%">
+        <filter id="${p}glow-emerald" x="-25%" y="-25%" width="150%" height="150%">
           <feGaussianBlur stdDeviation="4" result="blur" />
           <feComposite in="SourceGraphic" in2="blur" operator="over" />
         </filter>
-        <filter id="glow-purple" x="-20%" y="-20%" width="140%" height="140%">
+        <filter id="${p}glow-purple" x="-25%" y="-25%" width="150%" height="150%">
           <feGaussianBlur stdDeviation="3.5" result="blur" />
           <feComposite in="SourceGraphic" in2="blur" operator="over" />
         </filter>
-        <filter id="glow-red" x="-20%" y="-20%" width="140%" height="140%">
+        <filter id="${p}glow-red" x="-25%" y="-25%" width="150%" height="150%">
           <feGaussianBlur stdDeviation="3.5" result="blur" />
           <feComposite in="SourceGraphic" in2="blur" operator="over" />
         </filter>
 
-        <!-- Marcadores de Flechas SVG -->
-        <marker id="arr-cyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+        <!-- Marcadores de Flechas SVG con cabeza pronunciada y nítida -->
+        <marker id="${p}arr-cyan" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#38bdf8" />
         </marker>
-        <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7" />
+        <marker id="${p}arr-cyan-rev" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+          <path d="M 9 1.5 L 0 5 L 9 8.5 z" fill="#38bdf8" />
         </marker>
-        <marker id="arr-gold" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+        <marker id="${p}arr-gold" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#f59e0b" />
         </marker>
-        <marker id="arr-emerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+        <marker id="${p}arr-emerald" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#10b981" />
         </marker>
-        <marker id="arr-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 1 L 10 5 L 0 9 z" fill="#c084fc" />
+        <marker id="${p}arr-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#c084fc" />
         </marker>
-        <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444" />
+        <marker id="${p}arr-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#ef4444" />
         </marker>
-        <marker id="arr-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-          <path d="M 0 1 L 10 5 L 0 9 z" fill="#94a3b8" />
+        <marker id="${p}arr-gray" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 2 L 8 5 L 0 8 z" fill="#94a3b8" />
         </marker>
 
-        <!-- Gradientes de Fondo -->
-        <linearGradient id="transversalGradTop" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.8"/>
-          <stop offset="50%" stop-color="#0284c7" stop-opacity="0.7"/>
-          <stop offset="100%" stop-color="#1e3a8a" stop-opacity="0.8"/>
+        <!-- Gradientes -->
+        <linearGradient id="${p}transversalGradTop" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.85"/>
+          <stop offset="50%" stop-color="#0284c7" stop-opacity="0.75"/>
+          <stop offset="100%" stop-color="#1e3a8a" stop-opacity="0.85"/>
         </linearGradient>
 
-        <linearGradient id="transversalGradBottom" x1="0%" y1="0%" x2="100%" y2="0%">
+        <linearGradient id="${p}transversalGradBottom" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stop-color="#0f172a" stop-opacity="0.9"/>
           <stop offset="50%" stop-color="#1e293b" stop-opacity="0.95"/>
           <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9"/>
         </linearGradient>
 
-        <linearGradient id="stageBgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#0f172a" stop-opacity="0.85"/>
-          <stop offset="100%" stop-color="#090d16" stop-opacity="0.9"/>
+        <linearGradient id="${p}stageBgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#0f172a" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#080d17" stop-opacity="0.95"/>
         </linearGradient>
 
-        <linearGradient id="dokbCardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="${p}dokbCardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#2d1b02" stop-opacity="0.9"/>
           <stop offset="60%" stop-color="#181105" stop-opacity="0.95"/>
           <stop offset="100%" stop-color="#2d1b02" stop-opacity="0.9"/>
@@ -114,387 +117,437 @@ class KnowledgeSimulationEngine {
       <!-- ===================================================================
            1. EJE TRANSVERSAL SUPERIOR: COMUNICACIÓN ORGANIZACIONAL
            =================================================================== -->
-      <g class="svg-transversal-bar" id="svg-bar-comunicacion" transform="translate(30, 15)">
-        <rect width="1140" height="48" rx="8" fill="url(#transversalGradTop)" stroke="#38bdf8" stroke-width="1.2" opacity="0.95"/>
-        <text x="25" y="24" fill="#bae6fd" font-family="'Outfit', sans-serif" font-weight="800" font-size="11" letter-spacing="1">EJE TRANSVERSAL</text>
-        <text x="25" y="39" fill="#ffffff" font-family="'Outfit', sans-serif" font-weight="700" font-size="13">COMUNICACIÓN ORGANIZACIONAL (Cultura · Liderazgo · Branding · Endomarketing · Indicadores)</text>
-        <text x="1115" y="30" text-anchor="end" fill="#fde68a" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">TIC · IA · Redes de Aprendizaje ➔</text>
-        <!-- Líneas conectoras que bajan hacia las 4 etapas -->
-        <line x1="125" y1="48" x2="125" y2="65" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arr-cyan)"/>
-        <line x1="400" y1="48" x2="400" y2="65" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arr-cyan)"/>
-        <line x1="685" y1="48" x2="685" y2="65" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arr-cyan)"/>
-        <line x1="975" y1="48" x2="975" y2="65" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arr-cyan)"/>
+      <g class="svg-transversal-bar" id="${p}svg-bar-comunicacion" transform="translate(30, 12)">
+        <rect width="1140" height="46" rx="8" fill="url(#${p}transversalGradTop)" stroke="#38bdf8" stroke-width="1.2" opacity="0.95"/>
+        <text x="25" y="22" fill="#bae6fd" font-family="'Outfit', sans-serif" font-weight="800" font-size="10.5" letter-spacing="1">EJE TRANSVERSAL</text>
+        <text x="25" y="37" fill="#ffffff" font-family="'Outfit', sans-serif" font-weight="700" font-size="12.5">COMUNICACIÓN ORGANIZACIONAL (Cultura · Liderazgo Transformacional · Branding · Endomarketing · Indicadores)</text>
+        <text x="1115" y="29" text-anchor="end" fill="#fde68a" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">TIC · IA · Redes de Aprendizaje ➔</text>
+        
+        <!-- Líneas conectoras que descienden con flechas hacia las 4 etapas -->
+        <line x1="155" y1="46" x2="155" y2="70" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#${p}arr-cyan)"/>
+        <line x1="430" y1="46" x2="430" y2="70" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#${p}arr-cyan)"/>
+        <line x1="720" y1="46" x2="720" y2="70" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#${p}arr-cyan)"/>
+        <line x1="1025" y1="46" x2="1025" y2="70" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#${p}arr-cyan)"/>
       </g>
 
       <!-- ===================================================================
            2. ETAPA 1: DIAGNÓSTICO (GAP)
            =================================================================== -->
-      <g class="svg-stage-container" id="svg-stage-diagnostico" data-stage="diagnostico" transform="translate(30, 75)">
-        <rect class="stage-outline" width="245" height="255" rx="12" fill="url(#stageBgGrad)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.5"/>
-        <rect x="0" y="0" width="245" height="28" rx="12" fill="rgba(56, 189, 248, 0.15)"/>
-        <text x="12" y="19" fill="#38bdf8" font-family="'Outfit', sans-serif" font-weight="700" font-size="11.5">1. DIAGNÓSTICO (GAP)</text>
-        <text x="233" y="19" text-anchor="end" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9">KC - Reclamo</text>
+      <g class="svg-stage-container" id="${p}svg-stage-diagnostico" data-stage="diagnostico" transform="translate(30, 72)">
+        <rect class="stage-outline" width="250" height="273" rx="12" fill="url(#${p}stageBgGrad)" stroke="rgba(56, 189, 248, 0.35)" stroke-width="1.5"/>
+        <rect x="0" y="0" width="250" height="28" rx="12" fill="rgba(56, 189, 248, 0.15)"/>
+        <text x="12" y="19" fill="#38bdf8" font-family="'Outfit', sans-serif" font-weight="700" font-size="11.5">1. DIAGNÓSTICO</text>
+        <text x="238" y="19" text-anchor="end" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5">KC - Reclamo</text>
 
-        <!-- Columna Izquierda: Fuentes de Brecha -->
-        <g class="svg-subnode" id="sub-1-1" data-sub="sub-1-1" transform="translate(10, 36)">
-          <rect width="100" height="36" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
-          <text x="8" y="15" fill="#f8fafc" font-size="9.5" font-family="'Outfit'" font-weight="600">Brechas de</text>
-          <text x="8" y="27" fill="#38bdf8" font-size="9" font-family="'Outfit'">conocimiento (GAP)</text>
-        </g>
-
-        <g class="svg-subnode" id="sub-1-2" data-sub="sub-1-2" transform="translate(10, 80)">
-          <rect width="100" height="36" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="1"/>
-          <text x="8" y="15" fill="#f8fafc" font-size="9.5" font-family="'Outfit'" font-weight="600">Conocimiento</text>
-          <text x="8" y="27" fill="#94a3b8" font-size="9" font-family="'Outfit'">disponible</text>
-        </g>
-
-        <g class="svg-subnode" id="sub-1-3" data-sub="sub-1-3" transform="translate(10, 124)">
-          <rect width="100" height="38" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="1"/>
-          <text x="8" y="15" fill="#f8fafc" font-size="9" font-family="'Outfit'" font-weight="600">Desafíos CUN</text>
-          <text x="8" y="27" fill="#94a3b8" font-size="8.5" font-family="'Outfit'">(necesidades)</text>
-        </g>
-
-        <!-- Conectores hacia Columna Central -->
-        <path d="M 110 54 L 126 54 L 126 85 L 134 85" fill="none" stroke="#64748b" stroke-width="1.2" marker-end="url(#arr-gray)"/>
-        <path d="M 110 98 L 134 98" fill="none" stroke="#64748b" stroke-width="1.2" marker-end="url(#arr-gray)"/>
-        <path d="M 110 143 L 126 143 L 126 150 L 134 150" fill="none" stroke="#64748b" stroke-width="1.2" marker-end="url(#arr-gray)"/>
-
-        <!-- Columna Central: Análisis & Retroalimentación -->
-        <g class="svg-subnode" id="sub-1-4" data-sub="sub-1-4" transform="translate(136, 68)">
-          <rect width="98" height="44" rx="6" fill="#0f172a" stroke="#0284c7" stroke-width="1.2"/>
-          <text x="8" y="16" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Análisis indicadores</text>
-          <text x="8" y="28" fill="#38bdf8" font-size="8.5" font-family="'Outfit'">de desempeño</text>
-        </g>
-
-        <g class="svg-subnode" id="sub-1-5" data-sub="sub-1-5" transform="translate(136, 124)">
-          <rect width="98" height="44" rx="6" fill="#0f172a" stroke="#0284c7" stroke-width="1.2"/>
-          <text x="8" y="16" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Retroalimentación</text>
-          <text x="8" y="28" fill="#38bdf8" font-size="8.5" font-family="'Outfit'">de Stakeholders</text>
-        </g>
-
-        <!-- Flecha Bidireccional entre Análisis y Retroalimentación -->
-        <path d="M 185 112 L 185 124" fill="none" stroke="#38bdf8" stroke-width="1.2"/>
-
-        <!-- Salida hacia el nodo KC -->
-        <g class="svg-subnode" id="sub-1-6" data-sub="sub-1-6" transform="translate(160, 185)">
-          <rect width="52" height="26" rx="6" fill="#0369a1" stroke="#38bdf8" stroke-width="1.5" filter="url(#glow-cyan)"/>
-          <text x="26" y="17" text-anchor="middle" fill="#ffffff" font-family="'JetBrains Mono'" font-size="11" font-weight="800">KC</text>
-        </g>
-
-        <path d="M 185 168 L 185 185" fill="none" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arr-cyan)"/>
+        <!-- Sub-bloque Izquierdo: Fuentes de Brecha (Agrupador) -->
+        <rect x="10" y="36" width="100" height="150" rx="8" fill="rgba(255, 255, 255, 0.02)" stroke="rgba(255, 255, 255, 0.1)" stroke-dasharray="3,3"/>
         
-        <!-- Flecha de salida hacia Etapa 2 -->
-        <path d="M 212 198 L 260 198" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr-cyan)"/>
-        <text x="235" y="222" text-anchor="middle" fill="#38bdf8" font-size="8" font-family="'JetBrains Mono'">Reclamo KC ➔</text>
+        <!-- Recuadro 1: Brechas de conocimiento (GAP) -->
+        <g class="svg-subnode" id="${p}sub-1-1" data-sub="sub-1-1" transform="translate(14, 42)">
+          <rect width="92" height="40" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+          <text x="6" y="17" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Brechas de</text>
+          <text x="6" y="30" fill="#38bdf8" font-size="8.5" font-family="'Outfit'" font-weight="700">conocimiento (GAP)</text>
+        </g>
+
+        <!-- Recuadro 2: Conocimiento disponible -->
+        <g class="svg-subnode" id="${p}sub-1-2" data-sub="sub-1-2" transform="translate(14, 89)">
+          <rect width="92" height="40" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="1.2"/>
+          <text x="6" y="17" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Conocimiento</text>
+          <text x="6" y="30" fill="#94a3b8" font-size="8.5" font-family="'Outfit'">disponible</text>
+        </g>
+
+        <!-- Recuadro 3: Desafíos de la organización -->
+        <g class="svg-subnode" id="${p}sub-1-3" data-sub="sub-1-3" transform="translate(14, 136)">
+          <rect width="92" height="44" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="1.2"/>
+          <text x="6" y="16" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Desafíos CUN</text>
+          <text x="6" y="28" fill="#94a3b8" font-size="8" font-family="'Outfit'">(necesidades y)</text>
+          <text x="6" y="39" fill="#94a3b8" font-size="8" font-family="'Outfit'">demandas</text>
+        </g>
+
+        <!-- Flechas desde fuentes hacia columna central (con cabezas visibles) -->
+        <path d="M 106 62 L 132 62 L 132 85 L 140 85" fill="none" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#${p}arr-cyan)"/>
+        <path d="M 106 109 L 140 109" fill="none" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#${p}arr-cyan)"/>
+        <path d="M 106 158 L 132 158 L 132 170 L 140 170" fill="none" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#${p}arr-cyan)"/>
+
+        <!-- Columna Central: Análisis de Indicadores & Retroalimentación de Stakeholders -->
+        <g class="svg-subnode" id="${p}sub-1-4" data-sub="sub-1-4" transform="translate(142, 65)">
+          <rect width="96" height="44" rx="6" fill="#0f172a" stroke="#0284c7" stroke-width="1.4"/>
+          <text x="7" y="17" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Análisis indicadores</text>
+          <text x="7" y="31" fill="#38bdf8" font-size="8.5" font-family="'Outfit'">de desempeño</text>
+        </g>
+
+        <!-- Conexión Recíproca / Bidireccional Explícita entre Análisis y Stakeholders -->
+        <line x1="190" y1="112" x2="190" y2="142" stroke="#38bdf8" stroke-width="2" marker-start="url(#${p}arr-cyan-rev)" marker-end="url(#${p}arr-cyan)"/>
+
+        <g class="svg-subnode" id="${p}sub-1-5" data-sub="sub-1-5" transform="translate(142, 145)">
+          <rect width="96" height="44" rx="6" fill="#0f172a" stroke="#0284c7" stroke-width="1.4"/>
+          <text x="7" y="17" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Retroalimentación</text>
+          <text x="7" y="31" fill="#38bdf8" font-size="8.5" font-family="'Outfit'">de Stakeholders</text>
+        </g>
+
+        <!-- Flechas que convergen hacia el nodo KC -->
+        <path d="M 190 191 L 190 216" fill="none" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#${p}arr-cyan)"/>
+
+        <!-- Nodo KC: Reclamo de Conocimiento -->
+        <g class="svg-subnode" id="${p}sub-1-6" data-sub="sub-1-6" transform="translate(164, 218)">
+          <rect width="52" height="30" rx="6" fill="#0369a1" stroke="#38bdf8" stroke-width="1.8" filter="url(#${p}glow-cyan)"/>
+          <text x="26" y="19" text-anchor="middle" fill="#ffffff" font-family="'JetBrains Mono'" font-size="12" font-weight="800">KC</text>
+        </g>
+
+        <!-- Flecha de salida hacia Etapa 2 con cabeza visible -->
+        <path d="M 218 233 L 260 233" fill="none" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#${p}arr-cyan)"/>
+        <text x="238" y="258" text-anchor="middle" fill="#38bdf8" font-size="8" font-family="'JetBrains Mono'" font-weight="700">Reclamo KC ➔</text>
       </g>
 
-      <!-- Conector Etapa 1 -> Etapa 2 -->
-      <line x1="275" y1="185" x2="295" y2="185" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arr-cyan)"/>
+      <!-- Conector entre Etapa 1 y Etapa 2 -->
+      <line x1="280" y1="205" x2="295" y2="205" stroke="#38bdf8" stroke-width="3" marker-end="url(#${p}arr-cyan)"/>
 
       <!-- ===================================================================
-           3. ETAPA 2: PRODUCCIÓN DEL CONOCIMIENTO (SECI & BLOOM)
+           3. ETAPA 2: PRODUCCIÓN DEL CONOCIMIENTO (SECUENCIA HORIZONTAL REAL)
+           Columna Izq (Fuentes) ➔ CKC (Centro) ➔ Evaluación (Derecha) ➔ Loop Superior
            =================================================================== -->
-      <g class="svg-stage-container" id="svg-stage-produccion" data-stage="produccion" transform="translate(295, 75)">
-        <rect class="stage-outline" width="260" height="255" rx="12" fill="url(#stageBgGrad)" stroke="rgba(14, 165, 233, 0.3)" stroke-width="1.5"/>
-        <rect x="0" y="0" width="260" height="28" rx="12" fill="rgba(14, 165, 233, 0.15)"/>
+      <g class="svg-stage-container" id="${p}svg-stage-produccion" data-stage="produccion" transform="translate(295, 72)">
+        <rect class="stage-outline" width="270" height="273" rx="12" fill="url(#${p}stageBgGrad)" stroke="rgba(14, 165, 233, 0.35)" stroke-width="1.5"/>
+        <rect x="0" y="0" width="270" height="28" rx="12" fill="rgba(14, 165, 233, 0.15)"/>
         <text x="12" y="19" fill="#38bdf8" font-family="'Outfit', sans-serif" font-weight="700" font-size="11.5">2. PRODUCCIÓN DEL CONOCIMIENTO</text>
-        <text x="248" y="19" text-anchor="end" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9">CKC - Redes</text>
+        <text x="258" y="19" text-anchor="end" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5">CKC - Redes</text>
 
-        <!-- Subnodo 2.1: Aprendizaje en Redes -->
-        <g class="svg-subnode" id="sub-2-1" data-sub="sub-2-1" transform="translate(10, 36)">
-          <rect width="125" height="42" rx="6" fill="#1e293b" stroke="#0284c7" stroke-width="1"/>
-          <text x="8" y="15" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Aprendizaje individual</text>
-          <text x="8" y="27" fill="#38bdf8" font-size="8.5" font-family="'Outfit'">y grupal (redes)</text>
+        <!-- Columna Izquierda: Aprendizaje, Formulación, Adquisición -->
+        <g class="svg-subnode" id="${p}sub-2-1" data-sub="sub-2-1" transform="translate(10, 40)">
+          <rect width="112" height="42" rx="6" fill="#1e293b" stroke="#0284c7" stroke-width="1.2"/>
+          <text x="6" y="16" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Aprendizaje individual</text>
+          <text x="6" y="29" fill="#38bdf8" font-size="8.5" font-family="'Outfit'">y grupal (redes)</text>
         </g>
 
-        <!-- Subnodo 2.2: Adquisición de Información -->
-        <g class="svg-subnode" id="sub-2-2" data-sub="sub-2-2" transform="translate(10, 92)">
-          <rect width="125" height="38" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="1"/>
-          <text x="8" y="15" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Adquisición de</text>
-          <text x="8" y="27" fill="#94a3b8" font-size="8.5" font-family="'Outfit'">información técnica</text>
+        <!-- Flecha descendente desde Aprendizaje hacia Formulación -->
+        <line x1="66" y1="83" x2="66" y2="108" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#${p}arr-cyan)"/>
+
+        <g class="svg-subnode" id="${p}sub-2-3" data-sub="sub-2-3" transform="translate(10, 110)">
+          <rect width="112" height="44" rx="6" fill="#1e293b" stroke="#0284c7" stroke-width="1.4"/>
+          <text x="6" y="17" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Formulación de</text>
+          <text x="6" y="30" fill="#38bdf8" font-size="8.5" font-family="'Outfit'">reclamos (Bloom)</text>
         </g>
 
-        <!-- Subnodo 2.3: Formulación de Reclamos -->
-        <g class="svg-subnode" id="sub-2-3" data-sub="sub-2-3" transform="translate(10, 146)">
-          <rect width="125" height="42" rx="6" fill="#1e293b" stroke="#0284c7" stroke-width="1"/>
-          <text x="8" y="15" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Formulación de</text>
-          <text x="8" y="27" fill="#38bdf8" font-size="8.5" font-family="'Outfit'">reclamos (Bloom)</text>
+        <!-- Flecha ascendente desde Adquisición hacia Formulación -->
+        <line x1="66" y1="180" x2="66" y2="157" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#${p}arr-cyan)"/>
+
+        <g class="svg-subnode" id="${p}sub-2-2" data-sub="sub-2-2" transform="translate(10, 182)">
+          <rect width="112" height="42" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="1.2"/>
+          <text x="6" y="16" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Adquisición de</text>
+          <text x="6" y="29" fill="#94a3b8" font-size="8.5" font-family="'Outfit'">información técnica</text>
         </g>
 
-        <!-- Conexión hacia CKC -->
-        <path d="M 135 57 L 152 57 L 152 110 L 160 110" fill="none" stroke="#38bdf8" stroke-width="1.2" marker-end="url(#arr-cyan)"/>
-        <path d="M 135 110 L 160 110" fill="none" stroke="#38bdf8" stroke-width="1.2" marker-end="url(#arr-cyan)"/>
-        <path d="M 135 167 L 152 167 L 152 110 L 160 110" fill="none" stroke="#38bdf8" stroke-width="1.2" marker-end="url(#arr-cyan)"/>
+        <!-- Flecha horizontal desde Formulación hacia CKC -->
+        <line x1="124" y1="132" x2="144" y2="132" stroke="#38bdf8" stroke-width="2" marker-end="url(#${p}arr-cyan)"/>
 
-        <!-- Subnodo 2.4: El CKC Codificado -->
-        <g class="svg-subnode" id="sub-2-4" data-sub="sub-2-4" transform="translate(165, 96)">
-          <polygon points="0,-14 16,-8 16,8 0,14 -16,8 -16,-8" fill="#0891b2" stroke="#38bdf8" stroke-width="2" filter="url(#glow-cyan)" transform="translate(24, 15)"/>
-          <text x="24" y="19" text-anchor="middle" fill="#ffffff" font-family="'JetBrains Mono'" font-size="8.5" font-weight="800">CKC</text>
+        <!-- Centro: Bloque CKC (Reclamo Codificado) -->
+        <g class="svg-subnode" id="${p}sub-2-4" data-sub="sub-2-4" transform="translate(146, 114)">
+          <rect width="44" height="36" rx="6" fill="#0891b2" stroke="#38bdf8" stroke-width="2" filter="url(#${p}glow-cyan)"/>
+          <text x="22" y="23" text-anchor="middle" fill="#ffffff" font-family="'JetBrains Mono'" font-size="10" font-weight="900">CKC</text>
         </g>
 
-        <!-- Flecha CKC -> Evaluación Interna -->
-        <path d="M 189 126 L 189 150" fill="none" stroke="#38bdf8" stroke-width="1.2" marker-end="url(#arr-cyan)"/>
+        <!-- Flecha horizontal desde CKC hacia Evaluación de reclamos (A LA MISMA ALTURA A LA DERECHA) -->
+        <line x1="192" y1="132" x2="204" y2="132" stroke="#38bdf8" stroke-width="2" marker-end="url(#${p}arr-cyan)"/>
 
-        <!-- Subnodo 2.5: Evaluación de Reclamos -->
-        <g class="svg-subnode" id="sub-2-5" data-sub="sub-2-5" transform="translate(142, 150)">
-          <rect width="105" height="42" rx="6" fill="#0f172a" stroke="#0ea5e9" stroke-width="1.2"/>
-          <text x="8" y="15" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Evaluación interna</text>
-          <text x="8" y="27" fill="#38bdf8" font-size="8.5" font-family="'Outfit'">en la red de pares</text>
+        <!-- Derecha: Evaluación de reclamos de conocimiento -->
+        <g class="svg-subnode" id="${p}sub-2-5" data-sub="sub-2-5" transform="translate(206, 110)">
+          <rect width="56" height="44" rx="6" fill="#0f172a" stroke="#0ea5e9" stroke-width="1.4"/>
+          <text x="4" y="16" fill="#f8fafc" font-size="8" font-family="'Outfit'" font-weight="600">Evaluación</text>
+          <text x="4" y="27" fill="#38bdf8" font-size="8" font-family="'Outfit'">reclamos</text>
+          <text x="4" y="38" fill="#94a3b8" font-size="7.5" font-family="'Outfit'">(pares red)</text>
         </g>
 
-        <!-- Lazo de Retroalimentación Interna desde Evaluación a Aprendizaje -->
-        <path d="M 142 171 L 130 171 L 130 198 L 72 198 L 72 188" fill="none" stroke="rgba(56, 189, 248, 0.6)" stroke-width="1.2" stroke-dasharray="3,3" marker-end="url(#arr-cyan)"/>
+        <!-- Lazo de Retroalimentación Superior: Desde Evaluación hasta Aprendizaje (como en el PDF Pág. 7) -->
+        <path d="M 234 108 L 234 26 L 66 26 L 66 38" fill="none" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="3,3" marker-end="url(#${p}arr-cyan)"/>
 
-        <!-- Salida hacia Etapa 3 -->
-        <path d="M 212 110 L 255 110" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr-cyan)"/>
-        <text x="235" y="132" text-anchor="middle" fill="#38bdf8" font-size="8" font-family="'JetBrains Mono'">CKC ➔</text>
+        <!-- Salida hacia Etapa 3 (Filtración) -->
+        <path d="M 234 156 L 234 205 L 268 205" fill="none" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#${p}arr-cyan)"/>
+        <text x="238" y="228" text-anchor="middle" fill="#38bdf8" font-size="8" font-family="'JetBrains Mono'" font-weight="700">CKC ➔</text>
       </g>
 
-      <!-- Conector Etapa 2 -> Etapa 3 -->
-      <line x1="555" y1="185" x2="575" y2="185" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arr-cyan)"/>
+      <!-- Conector entre Etapa 2 y Etapa 3 -->
+      <line x1="565" y1="205" x2="580" y2="205" stroke="#38bdf8" stroke-width="3" marker-end="url(#${p}arr-cyan)"/>
 
       <!-- ===================================================================
            4. ETAPA 3: FILTRACIÓN DEL CONOCIMIENTO (MCELROY)
+           Tres rieles horizontales paralelos con cabezas de flecha explícitas
            =================================================================== -->
-      <g class="svg-stage-container" id="svg-stage-filtracion" data-stage="filtracion" transform="translate(575, 75)">
-        <rect class="stage-outline" width="280" height="255" rx="12" fill="url(#stageBgGrad)" stroke="rgba(168, 85, 247, 0.35)" stroke-width="1.5"/>
-        <rect x="0" y="0" width="280" height="28" rx="12" fill="rgba(168, 85, 247, 0.15)"/>
+      <g class="svg-stage-container" id="${p}svg-stage-filtracion" data-stage="filtracion" transform="translate(580, 72)">
+        <rect class="stage-outline" width="285" height="273" rx="12" fill="url(#${p}stageBgGrad)" stroke="rgba(168, 85, 247, 0.35)" stroke-width="1.5"/>
+        <rect x="0" y="0" width="285" height="28" rx="12" fill="rgba(168, 85, 247, 0.15)"/>
         <text x="12" y="19" fill="#c084fc" font-family="'Outfit', sans-serif" font-weight="700" font-size="11.5">3. FILTRACIÓN (KCE · McElroy)</text>
-        <text x="268" y="19" text-anchor="end" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9">SKC/UKC/FKC</text>
+        <text x="273" y="19" text-anchor="end" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5">SKC/UKC/FKC</text>
 
-        <!-- FILA 1: SUPERVIVIENTE (SKC) -->
-        <g class="svg-subnode" id="sub-3-skc-info" data-sub="sub-3-2" transform="translate(10, 36)">
-          <rect width="58" height="26" rx="4" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
-          <text x="29" y="16" text-anchor="middle" fill="#6ee7b7" font-size="8" font-family="'JetBrains Mono'">Info SKC</text>
+        <!-- RIEL 1: SUPERVIVIENTE (SKC - Verde Esmeralda) -->
+        <g class="svg-subnode" id="${p}sub-3-skc-info" data-sub="sub-3-2" transform="translate(8, 40)">
+          <rect width="54" height="28" rx="4" fill="#1e293b" stroke="#10b981" stroke-width="1.2"/>
+          <text x="27" y="18" text-anchor="middle" fill="#6ee7b7" font-size="8" font-family="'JetBrains Mono'">Info SKC</text>
         </g>
-        <path d="M 68 49 L 80 49" fill="none" stroke="#10b981" stroke-width="1.2" marker-end="url(#arr-emerald)"/>
-        <g class="svg-subnode" id="sub-3-2" data-sub="sub-3-2" transform="translate(82, 34)">
-          <rect width="78" height="30" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
-          <text x="39" y="14" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="'Outfit'" font-weight="700">SKC</text>
-          <text x="39" y="24" text-anchor="middle" fill="#a7f3d0" font-size="7.5" font-family="'Outfit'">Superviviente</text>
-        </g>
-        <path d="M 160 49 L 174 49" fill="none" stroke="#10b981" stroke-width="1.2" marker-end="url(#arr-emerald)"/>
-        <g class="svg-subnode" id="sub-3-val" data-sub="sub-3-2" transform="translate(176, 34)">
-          <rect width="56" height="30" rx="5" fill="#0f172a" stroke="#10b981" stroke-width="1.2"/>
-          <text x="28" y="19" text-anchor="middle" fill="#10b981" font-size="8" font-family="'Outfit'" font-weight="700">Validación</text>
-        </g>
+        <line x1="64" y1="54" x2="74" y2="54" stroke="#10b981" stroke-width="1.5" marker-end="url(#${p}arr-emerald)"/>
 
-        <!-- FILA 2: INDECISO (UKC) -->
-        <g class="svg-subnode" id="sub-3-ukc-info" data-sub="sub-3-3" transform="translate(10, 96)">
-          <rect width="58" height="26" rx="4" fill="#1e293b" stroke="#c084fc" stroke-width="1"/>
-          <text x="29" y="16" text-anchor="middle" fill="#e9d5ff" font-size="8" font-family="'JetBrains Mono'">Info UKC</text>
+        <g class="svg-subnode" id="${p}sub-3-2" data-sub="sub-3-2" transform="translate(76, 38)">
+          <rect width="78" height="32" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="1.6"/>
+          <text x="39" y="15" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="'Outfit'" font-weight="800">SKC</text>
+          <text x="39" y="26" text-anchor="middle" fill="#a7f3d0" font-size="7.5" font-family="'Outfit'">Superviviente</text>
         </g>
-        <path d="M 68 109 L 80 109" fill="none" stroke="#c084fc" stroke-width="1.2" marker-end="url(#arr-purple)"/>
-        <g class="svg-subnode" id="sub-3-3" data-sub="sub-3-3" transform="translate(82, 94)">
-          <rect width="78" height="30" rx="6" fill="#581c87" stroke="#c084fc" stroke-width="1.5"/>
-          <text x="39" y="14" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="'Outfit'" font-weight="700">UKC</text>
-          <text x="39" y="24" text-anchor="middle" fill="#f3e8ff" font-size="7.5" font-family="'Outfit'">Indeciso (Plazo)</text>
+        <line x1="156" y1="54" x2="168" y2="54" stroke="#10b981" stroke-width="1.5" marker-end="url(#${p}arr-emerald)"/>
+
+        <g class="svg-subnode" id="${p}sub-3-val" data-sub="sub-3-2" transform="translate(170, 38)">
+          <rect width="60" height="32" rx="5" fill="#0f172a" stroke="#10b981" stroke-width="1.4"/>
+          <text x="30" y="20" text-anchor="middle" fill="#10b981" font-size="8" font-family="'Outfit'" font-weight="700">Validación</text>
         </g>
-        <path d="M 160 102 Q 170 85 176 85" fill="none" stroke="#10b981" stroke-width="1" marker-end="url(#arr-emerald)"/>
-        <g class="svg-subnode" id="sub-3-eval-pos" data-sub="sub-3-3" transform="translate(176, 74)">
-          <rect width="60" height="22" rx="4" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
-          <text x="30" y="14" text-anchor="middle" fill="#10b981" font-size="7" font-family="'Outfit'">Eval. positiva</text>
+        <!-- Flecha desde Validación hacia el bloque OK -->
+        <path d="M 232 54 L 248 70" fill="none" stroke="#10b981" stroke-width="2" marker-end="url(#${p}arr-emerald)"/>
+
+        <!-- RIEL 2: INDECISO (UKC - Púrpura) -->
+        <g class="svg-subnode" id="${p}sub-3-ukc-info" data-sub="sub-3-3" transform="translate(8, 105)">
+          <rect width="54" height="28" rx="4" fill="#1e293b" stroke="#c084fc" stroke-width="1.2"/>
+          <text x="27" y="18" text-anchor="middle" fill="#e9d5ff" font-size="8" font-family="'JetBrains Mono'">Info UKC</text>
         </g>
-        <path d="M 160 116 Q 170 128 176 128" fill="none" stroke="#c084fc" stroke-width="1" marker-end="url(#arr-purple)"/>
-        <g class="svg-subnode" id="sub-3-depuracion" data-sub="sub-3-3" transform="translate(176, 117)">
-          <rect width="60" height="22" rx="4" fill="#0f172a" stroke="#c084fc" stroke-width="1"/>
-          <text x="30" y="14" text-anchor="middle" fill="#c084fc" font-size="7" font-family="'Outfit'">Depuración</text>
+        <line x1="64" y1="119" x2="74" y2="119" stroke="#c084fc" stroke-width="1.5" marker-end="url(#${p}arr-purple)"/>
+
+        <g class="svg-subnode" id="${p}sub-3-3" data-sub="sub-3-3" transform="translate(76, 103)">
+          <rect width="78" height="32" rx="6" fill="#581c87" stroke="#c084fc" stroke-width="1.6"/>
+          <text x="39" y="15" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="'Outfit'" font-weight="800">UKC</text>
+          <text x="39" y="26" text-anchor="middle" fill="#f3e8ff" font-size="7.5" font-family="'Outfit'">Indeciso (Plazo)</text>
         </g>
 
-        <!-- FILA 3: FALSADO (FKC) -->
-        <g class="svg-subnode" id="sub-3-fkc-info" data-sub="sub-3-4" transform="translate(10, 156)">
-          <rect width="58" height="26" rx="4" fill="#1e293b" stroke="#ef4444" stroke-width="1"/>
-          <text x="29" y="16" text-anchor="middle" fill="#fca5a5" font-size="8" font-family="'JetBrains Mono'">Info FKC</text>
+        <!-- Bifurcación desde UKC: hacia Evaluación Positiva (arriba) y Depuración (abajo) -->
+        <path d="M 156 114 Q 164 96 170 96" fill="none" stroke="#10b981" stroke-width="1.5" marker-end="url(#${p}arr-emerald)"/>
+        <g class="svg-subnode" id="${p}sub-3-eval-pos" data-sub="sub-3-3" transform="translate(172, 83)">
+          <rect width="62" height="24" rx="4" fill="#0f172a" stroke="#10b981" stroke-width="1.2"/>
+          <text x="31" y="16" text-anchor="middle" fill="#10b981" font-size="7.5" font-family="'Outfit'">Eval. positiva</text>
         </g>
-        <path d="M 68 169 L 80 169" fill="none" stroke="#ef4444" stroke-width="1.2" marker-end="url(#arr-red)"/>
-        <g class="svg-subnode" id="sub-3-4" data-sub="sub-3-4" transform="translate(82, 154)">
-          <rect width="78" height="30" rx="6" fill="#7f1d1d" stroke="#ef4444" stroke-width="1.5"/>
-          <text x="39" y="14" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="'Outfit'" font-weight="700">FKC</text>
-          <text x="39" y="24" text-anchor="middle" fill="#fecaca" font-size="7.5" font-family="'Outfit'">Falsado (Lección)</text>
+        <!-- Flecha desde Eval. Positiva hacia OK -->
+        <path d="M 236 95 L 248 95" fill="none" stroke="#10b981" stroke-width="1.8" marker-end="url(#${p}arr-emerald)"/>
+
+        <path d="M 156 124 Q 164 138 170 138" fill="none" stroke="#c084fc" stroke-width="1.5" marker-end="url(#${p}arr-purple)"/>
+        <g class="svg-subnode" id="${p}sub-3-depuracion" data-sub="sub-3-3" transform="translate(172, 126)">
+          <rect width="62" height="24" rx="4" fill="#0f172a" stroke="#c084fc" stroke-width="1.2"/>
+          <text x="31" y="16" text-anchor="middle" fill="#c084fc" font-size="7.5" font-family="'Outfit'">Depuración</text>
         </g>
-        <path d="M 160 169 L 174 169" fill="none" stroke="#ef4444" stroke-width="1.2" marker-end="url(#arr-red)"/>
-        <g class="svg-subnode" id="sub-3-almacen-fkc" data-sub="sub-3-4" transform="translate(176, 154)">
-          <rect width="65" height="30" rx="5" fill="#0f172a" stroke="#ef4444" stroke-width="1.2"/>
-          <text x="32" y="14" text-anchor="middle" fill="#ef4444" font-size="7.5" font-family="'Outfit'">Almacén de</text>
-          <text x="32" y="24" text-anchor="middle" fill="#fca5a5" font-size="7.5" font-family="'Outfit'">lección (DOKB)</text>
+        <!-- Lazo de depuración que retorna a la red con plazo -->
+        <path d="M 203 152 L 203 166 L 115 166 L 115 137" fill="none" stroke="#c084fc" stroke-width="1.2" stroke-dasharray="2.5,2.5" marker-end="url(#${p}arr-purple)"/>
+
+        <!-- RIEL 3: FALSADO (FKC - Rojo Carmesí) -->
+        <g class="svg-subnode" id="${p}sub-3-fkc-info" data-sub="sub-3-4" transform="translate(8, 185)">
+          <rect width="54" height="28" rx="4" fill="#1e293b" stroke="#ef4444" stroke-width="1.2"/>
+          <text x="27" y="18" text-anchor="middle" fill="#fca5a5" font-size="8" font-family="'JetBrains Mono'">Info FKC</text>
+        </g>
+        <line x1="64" y1="199" x2="74" y2="199" stroke="#ef4444" stroke-width="1.5" marker-end="url(#${p}arr-red)"/>
+
+        <g class="svg-subnode" id="${p}sub-3-4" data-sub="sub-3-4" transform="translate(76, 183)">
+          <rect width="78" height="32" rx="6" fill="#7f1d1d" stroke="#ef4444" stroke-width="1.6"/>
+          <text x="39" y="15" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="'Outfit'" font-weight="800">FKC</text>
+          <text x="39" y="26" text-anchor="middle" fill="#fecaca" font-size="7.5" font-family="'Outfit'">Falsado (Lección)</text>
+        </g>
+        <line x1="156" y1="199" x2="168" y2="199" stroke="#ef4444" stroke-width="1.5" marker-end="url(#${p}arr-red)"/>
+
+        <g class="svg-subnode" id="${p}sub-3-almacen-fkc" data-sub="sub-3-4" transform="translate(170, 183)">
+          <rect width="70" height="32" rx="5" fill="#0f172a" stroke="#ef4444" stroke-width="1.4"/>
+          <text x="35" y="15" text-anchor="middle" fill="#ef4444" font-size="7.5" font-family="'Outfit'" font-weight="700">Almacenamiento</text>
+          <text x="35" y="25" text-anchor="middle" fill="#fca5a5" font-size="7" font-family="'Outfit'">(Evidencia DOKB)</text>
         </g>
 
-        <!-- Nodo de Consolidación OK (Salida formal de SKC e UKC aprobado) -->
-        <g class="svg-subnode" id="sub-3-5" data-sub="sub-3-5" transform="translate(244, 49)">
-          <rect width="28" height="46" rx="5" fill="#059669" stroke="#10b981" stroke-width="1.5" filter="url(#glow-emerald)"/>
-          <text x="14" y="27" text-anchor="middle" fill="#ffffff" font-family="'JetBrains Mono'" font-size="11" font-weight="800">OK</text>
-        </g>
-        <path d="M 232 49 L 244 65" fill="none" stroke="#10b981" stroke-width="1.2"/>
-        <path d="M 236 85 L 244 80" fill="none" stroke="#10b981" stroke-width="1.2"/>
+        <!-- Flecha desde Almacenamiento FKC que desciende a la DOKB -->
+        <path d="M 205 217 L 205 275 L 265 275" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#${p}arr-red)"/>
 
-        <!-- Salida desde OK hacia Integración -->
-        <path d="M 272 72 L 295 72" fill="none" stroke="#10b981" stroke-width="2" marker-end="url(#arr-emerald)"/>
-        <text x="260" y="112" text-anchor="middle" fill="#10b981" font-size="8" font-family="'JetBrains Mono'">Validado ➔</text>
+        <!-- Bloque OK de Consolidación (Extremo Derecho) -->
+        <g class="svg-subnode" id="${p}sub-3-5" data-sub="sub-3-5" transform="translate(250, 68)">
+          <rect width="26" height="52" rx="6" fill="#059669" stroke="#10b981" stroke-width="2" filter="url(#${p}glow-emerald)"/>
+          <text x="13" y="32" text-anchor="middle" fill="#ffffff" font-family="'JetBrains Mono'" font-size="11" font-weight="900">OK</text>
+        </g>
+
+        <!-- Salida formal desde OK hacia Integración -->
+        <path d="M 278 94 L 295 94" fill="none" stroke="#10b981" stroke-width="2.8" marker-end="url(#${p}arr-emerald)"/>
+        <text x="265" y="142" text-anchor="middle" fill="#10b981" font-size="8" font-family="'JetBrains Mono'" font-weight="700">Validado ➔</text>
       </g>
 
-      <!-- Conector Etapa 3 -> Etapa 4 -->
-      <line x1="855" y1="147" x2="875" y2="147" stroke="#10b981" stroke-width="2.5" marker-end="url(#arr-emerald)"/>
+      <!-- Conector entre Etapa 3 y Etapa 4 -->
+      <line x1="865" y1="166" x2="880" y2="166" stroke="#10b981" stroke-width="3" marker-end="url(#${p}arr-emerald)"/>
 
       <!-- ===================================================================
-           5. ETAPA 4: INTEGRACIÓN DEL CONOCIMIENTO (COK)
+           5. ETAPA 4: INTEGRACIÓN DEL CONOCIMIENTO (BUS COLECTOR VERTICAL REAL)
+           Entrada desde OK ➔ Pila Vertical ➔ Colector Saliente a la Derecha ➔ DOKB
            =================================================================== -->
-      <g class="svg-stage-container" id="svg-stage-integracion" data-stage="integracion" transform="translate(875, 75)">
-        <rect class="stage-outline" width="295" height="255" rx="12" fill="url(#stageBgGrad)" stroke="rgba(245, 158, 11, 0.35)" stroke-width="1.5"/>
-        <rect x="0" y="0" width="295" height="28" rx="12" fill="rgba(245, 158, 11, 0.15)"/>
+      <g class="svg-stage-container" id="${p}svg-stage-integracion" data-stage="integracion" transform="translate(880, 72)">
+        <rect class="stage-outline" width="290" height="273" rx="12" fill="url(#${p}stageBgGrad)" stroke="rgba(245, 158, 11, 0.35)" stroke-width="1.5"/>
+        <rect x="0" y="0" width="290" height="28" rx="12" fill="rgba(245, 158, 11, 0.15)"/>
         <text x="12" y="19" fill="#f59e0b" font-family="'Outfit', sans-serif" font-weight="700" font-size="11.5">4. INTEGRACIÓN DEL CONOCIMIENTO</text>
-        <text x="283" y="19" text-anchor="end" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9">COK ➔ DOKB</text>
+        <text x="278" y="19" text-anchor="end" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5">COK ➔ DOKB</text>
 
-        <!-- Pila de Procesos de Integración (Vertical Conectada) -->
-        <g class="svg-subnode" id="sub-4-1" data-sub="sub-4-1" transform="translate(50, 36)">
-          <rect width="180" height="28" rx="5" fill="#1e293b" stroke="#f59e0b" stroke-width="1.2"/>
-          <text x="12" y="18" fill="#fef3c7" font-size="9" font-family="'Outfit'" font-weight="700">1. Organizar (Metadatos & Taxonomía)</text>
-        </g>
-        <line x1="140" y1="64" x2="140" y2="76" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+        <!-- Línea distribuidora de entrada desde OK a los 4 procesos -->
+        <path d="M 0 94 L 18 94 L 18 56 L 30 56" fill="none" stroke="#10b981" stroke-width="1.8" marker-end="url(#${p}arr-emerald)"/>
+        <path d="M 18 94 L 30 102" fill="none" stroke="#10b981" stroke-width="1.8" marker-end="url(#${p}arr-emerald)"/>
+        <path d="M 18 94 L 18 148 L 30 148" fill="none" stroke="#10b981" stroke-width="1.8" marker-end="url(#${p}arr-emerald)"/>
+        <path d="M 18 148 L 18 194 L 30 194" fill="none" stroke="#10b981" stroke-width="1.8" marker-end="url(#${p}arr-emerald)"/>
 
-        <g class="svg-subnode" id="sub-4-2" data-sub="sub-4-2" transform="translate(50, 78)">
-          <rect width="180" height="28" rx="5" fill="#1e293b" stroke="#f59e0b" stroke-width="1.2"/>
-          <text x="12" y="18" fill="#fef3c7" font-size="9" font-family="'Outfit'" font-weight="700">2. Almacenar (Bases Centralizadas)</text>
-        </g>
-        <line x1="140" y1="106" x2="140" y2="118" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arr-gold)"/>
-
-        <g class="svg-subnode" id="sub-4-3" data-sub="sub-4-3" transform="translate(50, 120)">
-          <rect width="180" height="28" rx="5" fill="#1e293b" stroke="#f59e0b" stroke-width="1.2"/>
-          <text x="12" y="18" fill="#fef3c7" font-size="9" font-family="'Outfit'" font-weight="700">3. Transferencia (Mentorías & Talleres)</text>
-        </g>
-        <line x1="140" y1="148" x2="140" y2="160" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arr-gold)"/>
-
-        <g class="svg-subnode" id="sub-4-4" data-sub="sub-4-4" transform="translate(50, 162)">
-          <rect width="180" height="28" rx="5" fill="#1e293b" stroke="#f59e0b" stroke-width="1.2"/>
-          <text x="12" y="18" fill="#fef3c7" font-size="9" font-family="'Outfit'" font-weight="700">4. Divulgación (Comunidades & Transmedia)</text>
+        <!-- Pila de Procesos de Integración -->
+        <g class="svg-subnode" id="${p}sub-4-1" data-sub="sub-4-1" transform="translate(32, 40)">
+          <rect width="168" height="32" rx="5" fill="#1e293b" stroke="#f59e0b" stroke-width="1.2"/>
+          <text x="10" y="20" fill="#fef3c7" font-size="8.5" font-family="'Outfit'" font-weight="700">1. Organizar (Metadatos & Taxonomía)</text>
         </g>
 
-        <!-- Flecha de salida formal directa hacia la DOKB -->
-        <path d="M 140 190 L 140 235 L 140 260" fill="none" stroke="#f59e0b" stroke-width="3" marker-end="url(#arr-gold)"/>
-        <text x="145" y="222" fill="#fbbf24" font-size="8.5" font-family="'JetBrains Mono'" font-weight="700">COK hacia DOKB 🠗</text>
+        <g class="svg-subnode" id="${p}sub-4-2" data-sub="sub-4-2" transform="translate(32, 86)">
+          <rect width="168" height="32" rx="5" fill="#1e293b" stroke="#f59e0b" stroke-width="1.2"/>
+          <text x="10" y="20" fill="#fef3c7" font-size="8.5" font-family="'Outfit'" font-weight="700">2. Almacenar (Bases Centralizadas)</text>
+        </g>
+
+        <g class="svg-subnode" id="${p}sub-4-3" data-sub="sub-4-3" transform="translate(32, 132)">
+          <rect width="168" height="32" rx="5" fill="#1e293b" stroke="#f59e0b" stroke-width="1.2"/>
+          <text x="10" y="20" fill="#fef3c7" font-size="8.5" font-family="'Outfit'" font-weight="700">3. Transferencia (Mentorías & Talleres)</text>
+        </g>
+
+        <g class="svg-subnode" id="${p}sub-4-4" data-sub="sub-4-4" transform="translate(32, 178)">
+          <rect width="168" height="32" rx="5" fill="#1e293b" stroke="#f59e0b" stroke-width="1.2"/>
+          <text x="10" y="20" fill="#fef3c7" font-size="8.5" font-family="'Outfit'" font-weight="700">4. Divulgación (Comunidades & Redes)</text>
+        </g>
+
+        <!-- Bus Colector de Salida a la Derecha de los 4 Bloques (según Pág. 9 del PDF) -->
+        <line x1="202" y1="56" x2="225" y2="56" stroke="#f59e0b" stroke-width="1.6" marker-end="url(#${p}arr-gold)"/>
+        <line x1="202" y1="102" x2="225" y2="102" stroke="#f59e0b" stroke-width="1.6" marker-end="url(#${p}arr-gold)"/>
+        <line x1="202" y1="148" x2="225" y2="148" stroke="#f59e0b" stroke-width="1.6" marker-end="url(#${p}arr-gold)"/>
+        <line x1="202" y1="194" x2="225" y2="194" stroke="#f59e0b" stroke-width="1.6" marker-end="url(#${p}arr-gold)"/>
+
+        <!-- Línea colectora vertical común -->
+        <path d="M 225 56 L 225 220 L 225 260" fill="none" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#${p}arr-gold)"/>
+        <text x="215" y="240" text-anchor="end" fill="#fbbf24" font-size="8.5" font-family="'JetBrains Mono'" font-weight="700">COK hacia DOKB 🠗</text>
       </g>
 
       <!-- ===================================================================
            6. ZONA INFERIOR: STAKEHOLDERS, AMBIENTE Y DOKB
            =================================================================== -->
       
-      <!-- STAKEHOLDERS (ENTRADAS EXTERNAS) -->
-      <g class="svg-subnode" id="svg-stakeholders" data-sub="sub-1-5" transform="translate(30, 345)">
-        <rect width="245" height="85" rx="10" fill="#0b1120" stroke="#38bdf8" stroke-width="1.2" stroke-dasharray="4,4"/>
+      <!-- STAKEHOLDERS (ENTRADAS EXTERNAS - Pág. 10 del PDF) -->
+      <g class="svg-subnode" id="${p}svg-stakeholders" data-sub="sub-1-5" transform="translate(30, 360)">
+        <rect width="250" height="85" rx="10" fill="#0b1120" stroke="#38bdf8" stroke-width="1.4" stroke-dasharray="4,4"/>
         <text x="15" y="18" fill="#38bdf8" font-family="'Outfit'" font-weight="700" font-size="10.5">Stakeholders (Entradas Externas CUN)</text>
         
-        <rect x="12" y="30" width="65" height="38" rx="5" fill="#1e293b" stroke="#64748b" stroke-width="1"/>
-        <text x="44" y="47" text-anchor="middle" fill="#ffffff" font-size="8" font-family="'Outfit'" font-weight="600">Estado</text>
-        <text x="44" y="58" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="'Outfit'">MEN / CNA</text>
+        <rect x="12" y="28" width="68" height="42" rx="5" fill="#1e293b" stroke="#64748b" stroke-width="1.2"/>
+        <text x="46" y="47" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="'Outfit'" font-weight="600">Estado</text>
+        <text x="46" y="60" text-anchor="middle" fill="#94a3b8" font-size="7.5" font-family="'Outfit'">MEN / CNA</text>
 
-        <rect x="86" y="30" width="70" height="38" rx="5" fill="#1e293b" stroke="#64748b" stroke-width="1"/>
-        <text x="121" y="47" text-anchor="middle" fill="#ffffff" font-size="8" font-family="'Outfit'" font-weight="600">Sociedad</text>
-        <text x="121" y="58" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="'Outfit'">Estudiantes</text>
+        <rect x="88" y="28" width="74" height="42" rx="5" fill="#1e293b" stroke="#64748b" stroke-width="1.2"/>
+        <text x="125" y="47" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="'Outfit'" font-weight="600">Sociedad</text>
+        <text x="125" y="60" text-anchor="middle" fill="#94a3b8" font-size="7.5" font-family="'Outfit'">Estudiantes</text>
 
-        <rect x="165" y="30" width="68" height="38" rx="5" fill="#1e293b" stroke="#64748b" stroke-width="1"/>
-        <text x="199" y="47" text-anchor="middle" fill="#ffffff" font-size="8" font-family="'Outfit'" font-weight="600">Empresas</text>
-        <text x="199" y="58" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="'Outfit'">Aliadas</text>
+        <rect x="170" y="28" width="70" height="42" rx="5" fill="#1e293b" stroke="#64748b" stroke-width="1.2"/>
+        <text x="205" y="47" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="'Outfit'" font-weight="600">Empresas</text>
+        <text x="205" y="60" text-anchor="middle" fill="#94a3b8" font-size="7.5" font-family="'Outfit'">Aliadas</text>
 
-        <!-- Flecha hacia Diagnóstico -->
-        <path d="M 125 0 L 125 -15" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr-cyan)"/>
+        <!-- Flecha Ascendente Explícita hacia Diagnóstico -->
+        <line x1="125" y1="0" x2="125" y2="-15" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#${p}arr-cyan)"/>
+        <text x="135" y="-6" fill="#38bdf8" font-size="8" font-family="'JetBrains Mono'" font-weight="700">Entradas externas 🠕</text>
       </g>
 
-      <!-- AMBIENTE DE PROCESAMIENTO ORGANIZACIONAL -->
-      <g class="svg-subnode" id="svg-ambiente-procesamiento" transform="translate(295, 345)">
-        <rect width="540" height="90" rx="10" fill="#0c1424" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.2"/>
-        <text x="20" y="20" fill="#e2e8f0" font-family="'Outfit'" font-weight="700" font-size="11">Ambiente de Procesamiento Organizacional</text>
+      <!-- AMBIENTE DE PROCESAMIENTO ORGANIZACIONAL (Pág. 10 del PDF) -->
+      <g class="svg-subnode" id="${p}svg-ambiente-procesamiento" transform="translate(295, 360)">
+        <rect width="530" height="92" rx="10" fill="#0c1424" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.4"/>
+        <text x="18" y="19" fill="#e2e8f0" font-family="'Outfit'" font-weight="700" font-size="11">Ambiente de Procesamiento Organizacional</text>
         
-        <rect x="15" y="32" width="245" height="46" rx="6" fill="#152037" stroke="rgba(255, 255, 255, 0.08)"/>
-        <text x="25" y="50" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Comportamiento de Agentes Institucionales</text>
-        <text x="25" y="65" fill="#94a3b8" font-size="7.5" font-family="'Outfit'">Docentes, investigadores y administrativos interactúan</text>
+        <rect x="15" y="30" width="240" height="50" rx="6" fill="#152037" stroke="rgba(255, 255, 255, 0.1)"/>
+        <text x="25" y="48" fill="#f8fafc" font-size="8.5" font-family="'Outfit'" font-weight="600">Comportamiento de Agentes CUN</text>
+        <text x="25" y="62" fill="#94a3b8" font-size="7.5" font-family="'Outfit'">Docentes, investigadores y administrativos</text>
+        <text x="25" y="73" fill="#64748b" font-size="7" font-family="'Outfit'">interactúan en procesos organizacionales</text>
 
-        <rect x="275" y="32" width="245" height="46" rx="6" fill="#152037" stroke="rgba(255, 255, 255, 0.08)"/>
-        <text x="285" y="50" fill="#fde68a" font-size="8.5" font-family="'Outfit'" font-weight="600">DOKB "Contenedores Activos"</text>
-        <text x="285" y="65" fill="#cbd5e1" font-size="7.5" font-family="'Outfit'">Agentes (Indiv. y Grupos) · Artefactos (DOC, IT, SST)</text>
+        <rect x="270" y="30" width="245" height="50" rx="6" fill="#152037" stroke="rgba(255, 255, 255, 0.1)"/>
+        <text x="280" y="48" fill="#fde68a" font-size="8.5" font-family="'Outfit'" font-weight="600">DOKB "Contenedores Activos"</text>
+        <text x="280" y="62" fill="#cbd5e1" font-size="7.5" font-family="'Outfit'">Agentes (Indiv. y Grupos)</text>
+        <text x="280" y="73" fill="#cbd5e1" font-size="7.5" font-family="'Outfit'">Artefactos (DOC, IT, Procedimientos)</text>
+
+        <!-- Flecha de Entrada desde DOKB al Ambiente de Procesamiento -->
+        <path d="M 550 55 L 515 55" fill="none" stroke="#f59e0b" stroke-width="2" marker-end="url(#${p}arr-gold)"/>
 
         <!-- Flecha de Detección de Problemas hacia Diagnóstico -->
-        <path d="M 0 55 C -15 55, -20 20, -20 -15" fill="none" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
-        <text x="-20" y="70" text-anchor="end" fill="#f87171" font-size="7.5" font-family="'Outfit'">Detección de problemas</text>
+        <path d="M 0 55 C -15 55, -20 20, -15 -12" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#${p}arr-red)"/>
+        <text x="-20" y="30" text-anchor="end" fill="#f87171" font-size="7.5" font-family="'Outfit'" font-weight="600">Retroalimentación (detección problemas) ➔</text>
       </g>
 
       <!-- DOKB (BASE DE CONOCIMIENTO DISTRIBUIDA) -->
-      <g class="svg-dokb-card" id="svg-dokb-node" data-sub="dokb" transform="translate(855, 340)">
-        <rect width="315" height="135" rx="12" fill="url(#dokbCardGrad)" stroke="#f59e0b" stroke-width="2" filter="url(#glow-gold)"/>
+      <g class="svg-dokb-card" id="${p}svg-dokb-node" data-sub="dokb" transform="translate(845, 350)">
+        <rect width="325" height="135" rx="12" fill="url(#${p}dokbCardGrad)" stroke="#f59e0b" stroke-width="2" filter="url(#${p}glow-gold)"/>
         <rect x="15" y="12" width="60" height="20" rx="4" fill="#f59e0b"/>
-        <text x="45" y="26" text-anchor="middle" fill="#070b14" font-family="'JetBrains Mono'" font-weight="800" font-size="10">DOKB</text>
+        <text x="45" y="26" text-anchor="middle" fill="#070b14" font-family="'JetBrains Mono'" font-weight="900" font-size="10">DOKB</text>
         <text x="85" y="26" fill="#ffffff" font-family="'Outfit'" font-weight="800" font-size="11.5">Base Distribuida CUN</text>
         
-        <text x="18" y="48" fill="#fde68a" font-size="8.5" font-family="'Outfit'" font-weight="600">Conocimiento Objetivo y Subjetivo Institucional</text>
+        <text x="18" y="47" fill="#fde68a" font-size="8.5" font-family="'Outfit'" font-weight="600">Conocimiento Objetivo y Subjetivo Institucional</text>
         
         <!-- Bloques de Contenedores en DOKB -->
-        <g transform="translate(15, 56)">
-          <rect width="85" height="28" rx="4" fill="#3b2403" stroke="#f59e0b" stroke-width="1"/>
-          <text x="42" y="14" text-anchor="middle" fill="#ffffff" font-size="7.5" font-family="'Outfit'" font-weight="600">Manuales &</text>
-          <text x="42" y="23" text-anchor="middle" fill="#fde68a" font-size="7" font-family="'Outfit'">Tecnología</text>
+        <g transform="translate(14, 56)">
+          <rect width="90" height="30" rx="4" fill="#3b2403" stroke="#f59e0b" stroke-width="1.2"/>
+          <text x="45" y="15" text-anchor="middle" fill="#ffffff" font-size="7.5" font-family="'Outfit'" font-weight="600">Manuales &</text>
+          <text x="45" y="25" text-anchor="middle" fill="#fde68a" font-size="7" font-family="'Outfit'">Tecnología</text>
 
-          <rect x="95" y="0" width="85" height="28" rx="4" fill="#3b2403" stroke="#f59e0b" stroke-width="1"/>
-          <text x="137" y="14" text-anchor="middle" fill="#ffffff" font-size="7.5" font-family="'Outfit'" font-weight="600">Bases de Datos</text>
-          <text x="137" y="23" text-anchor="middle" fill="#fde68a" font-size="7" font-family="'Outfit'">Centralizadas</text>
+          <rect x="98" y="0" width="94" height="30" rx="4" fill="#3b2403" stroke="#f59e0b" stroke-width="1.2"/>
+          <text x="145" y="15" text-anchor="middle" fill="#ffffff" font-size="7.5" font-family="'Outfit'" font-weight="600">Bases de Datos</text>
+          <text x="145" y="25" text-anchor="middle" fill="#fde68a" font-size="7" font-family="'Outfit'">Centralizadas</text>
 
-          <rect x="190" y="0" width="88" height="28" rx="4" fill="#4c0519" stroke="#ef4444" stroke-width="1"/>
-          <text x="234" y="14" text-anchor="middle" fill="#ffffff" font-size="7.5" font-family="'Outfit'" font-weight="700">Lecciones FKC</text>
-          <text x="234" y="23" text-anchor="middle" fill="#fca5a5" font-size="7" font-family="'Outfit'">(Falsados)</text>
+          <rect x="200" y="0" width="94" height="30" rx="4" fill="#4c0519" stroke="#ef4444" stroke-width="1.4"/>
+          <text x="247" y="15" text-anchor="middle" fill="#ffffff" font-size="7.5" font-family="'Outfit'" font-weight="700">Lecciones FKC</text>
+          <text x="247" y="25" text-anchor="middle" fill="#fca5a5" font-size="7" font-family="'Outfit'">(Falsados)</text>
         </g>
 
-        <text x="18" y="112" fill="#94a3b8" font-size="8" font-family="'Outfit'">Elimina la pérdida de saberes por rotación o jubilación.</text>
+        <text x="18" y="114" fill="#94a3b8" font-size="8" font-family="'Outfit'">Elimina la vulnerabilidad por rotación docente o de expertos.</text>
       </g>
 
+      <!-- Flecha desde Integración (COK) entrando por arriba a la DOKB -->
+      <path d="M 1105 345 L 1105 350" fill="none" stroke="#f59e0b" stroke-width="3" marker-end="url(#${p}arr-gold)"/>
+
       <!-- ===================================================================
-           7. RETROALIMENTACIÓN EXPERIENCIAL SISTÉMICA (Línea de Retorno)
+           7. RETROALIMENTACIÓN EXPERIENCIAL SISTÉMICA (Lazo de Retorno DOKB ➔ GAP)
            =================================================================== -->
-      <path id="experientialReturnPath" d="M 855 450 C 620 515, 260 515, 95 340" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="6,6" marker-end="url(#arr-gold)"/>
-      <path id="experientialFlowAnim" d="M 855 450 C 620 515, 260 515, 95 340" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-dasharray="6,12" opacity="0.8">
-        <animate attributeName="stroke-dashoffset" values="36;0" dur="1.4s" repeatCount="indefinite" />
+      <path id="${p}experientialReturnPath" d="M 845 470 C 600 520, 240 520, 85 345" fill="none" stroke="#f59e0b" stroke-width="2.6" stroke-dasharray="6,6" marker-end="url(#${p}arr-gold)"/>
+      <path id="${p}experientialFlowAnim" d="M 845 470 C 600 520, 240 520, 85 345" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-dasharray="6,12" opacity="0.8">
+        <animate attributeName="stroke-dashoffset" values="36;0" dur="1.3s" repeatCount="indefinite" />
       </path>
-      <text x="470" y="492" text-anchor="middle" fill="#f59e0b" font-family="'Outfit'" font-weight="700" font-size="10.5" letter-spacing="0.5">
-        ⮜ RETROALIMENTACIÓN EXPERIENCIAL SISTÉMICA (La memoria en DOKB nutre continuamente el Diagnóstico)
-      </text>
+
+      <!-- Cartela protectora para la leyenda de retroalimentación (para no tapar la línea) -->
+      <g transform="translate(470, 480)">
+        <rect x="-240" y="-12" width="480" height="22" rx="4" fill="rgba(10, 16, 30, 0.85)" stroke="rgba(245, 158, 11, 0.3)" stroke-width="1"/>
+        <text y="3" text-anchor="middle" fill="#f59e0b" font-family="'Outfit'" font-weight="700" font-size="10" letter-spacing="0.5">
+          ⮜ RETROALIMENTACIÓN EXPERIENCIAL SISTÉMICA (La memoria en DOKB nutre continuamente el Diagnóstico)
+        </text>
+      </g>
 
       <!-- ===================================================================
            8. EJE TRANSVERSAL INFERIOR: EVALUACIÓN CONSTANTE & ISO 30401
            =================================================================== -->
-      <g class="svg-transversal-bar" id="svg-bar-evaluacion" transform="translate(30, 520)">
-        <rect width="1140" height="48" rx="8" fill="url(#transversalGradBottom)" stroke="rgba(245, 158, 11, 0.4)" stroke-width="1.2"/>
-        <text x="25" y="24" fill="#fde68a" font-family="'Outfit', sans-serif" font-weight="800" font-size="11" letter-spacing="1">SEGUNDO EJE TRANSVERSAL · MEJORA CONTINUA</text>
-        <text x="25" y="39" fill="#e2e8f0" font-family="'Outfit', sans-serif" font-weight="700" font-size="12.5">LA EVALUACIÓN ES CONSTANTE, NO UNA ETAPA (ISO 30401:2018 · ISO 9001:2015 · Tablero de Mando)</text>
-        <text x="1115" y="30" text-anchor="end" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">Ver Indicadores de Madurez ➔</text>
+      <g class="svg-transversal-bar" id="${p}svg-bar-evaluacion" transform="translate(30, 535)">
+        <rect width="1140" height="48" rx="8" fill="url(#${p}transversalGradBottom)" stroke="rgba(245, 158, 11, 0.4)" stroke-width="1.2"/>
+        <text x="25" y="23" fill="#fde68a" font-family="'Outfit', sans-serif" font-weight="800" font-size="10.5" letter-spacing="1">SEGUNDO EJE TRANSVERSAL · MEJORA CONTINUA</text>
+        <text x="25" y="38" fill="#e2e8f0" font-family="'Outfit', sans-serif" font-weight="700" font-size="12">LA EVALUACIÓN ES CONSTANTE, NO UNA ETAPA FINAL (ISO 30401:2018 · ISO 9001:2015 · Tablero de Mando)</text>
+        <text x="1115" y="29" text-anchor="end" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600">Ver Matriz de Indicadores ➔</text>
       </g>
 
       <!-- ===================================================================
            9. CÁPSULA DE CONOCIMIENTO MÓVIL Y MUTANTE (SOLO EN SIMULACIÓN)
            =================================================================== -->
-      <g id="knowledgeCapsuleGroup" transform="translate(90, 155)" style="transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.2);">
-        <!-- Forma inyectada dinámicamente -->
-        <g id="capsuleShapeRenderer">
-          <polygon points="0,-14 14,0 0,14 -14,0" fill="#f59e0b" stroke="#38bdf8" stroke-width="2.5" filter="url(#glow-cyan)"/>
-          <text y="4" text-anchor="middle" fill="#070b14" font-size="8" font-weight="900" font-family="'JetBrains Mono'">GAP</text>
+      <g id="${p}knowledgeCapsuleGroup" transform="translate(60, 155)" style="transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.2);">
+        <g id="${p}capsuleShapeRenderer">
+          <polygon points="0,-16 16,0 0,16 -16,0" fill="#f59e0b" stroke="#ffffff" stroke-width="2" filter="url(#${p}glow-cyan)"/>
+          <text y="4" text-anchor="middle" fill="#070b14" font-size="8.5" font-weight="900" font-family="'JetBrains Mono'">GAP</text>
         </g>
       </g>
 
-      <!-- Partícula de retorno experiencial activa -->
-      <circle id="retroPulseCircle" cx="95" cy="340" r="8" fill="#fbbf24" filter="url(#glow-gold)" opacity="0"/>
+      <!-- Pulso de retorno experiencial activo -->
+      <circle id="${p}retroPulseCircle" cx="85" cy="345" r="9" fill="#fbbf24" filter="url(#${p}glow-gold)" opacity="0"/>
     `;
 
     if (!this.isSimulationMode) {
-      const capsule = this.svg.querySelector("#knowledgeCapsuleGroup");
+      const capsule = this.svg.querySelector(`#${p}knowledgeCapsuleGroup`);
       if (capsule) capsule.style.display = "none";
     }
   }
 
   bindSubnodeClicks() {
-    // Al hacer clic en cualquier subnodo o tarjeta, notificar al drawer
     this.svg.querySelectorAll(".svg-subnode, .svg-stage-container, .svg-dokb-card, .svg-transversal-bar").forEach(elem => {
       elem.addEventListener("click", (e) => {
         e.stopPropagation();
-        const stageId = elem.getAttribute("data-stage") || elem.id.replace("svg-stage-", "");
+        const stageId = elem.getAttribute("data-stage") || elem.id.replace(this.pfx, "").replace("svg-stage-", "");
         const subId = elem.getAttribute("data-sub");
 
         window.dispatchEvent(new CustomEvent("cun:inspector:open", {
-          detail: { stageId, subId, elementId: elem.id }
+          detail: { stageId, subId, elementId: elem.id.replace(this.pfx, "") }
         }));
       });
     });
@@ -507,7 +560,7 @@ class KnowledgeSimulationEngine {
     const currentStep = this.currentCase.pasos[this.currentStepIndex];
     if (!currentStep) return;
 
-    // 1. Mover la cápsula física en el mapa
+    // 1. Mover y mutar la cápsula gráfica
     this.moveCapsule(currentStep);
 
     // 2. Actualizar tarjeta de información en vivo
@@ -552,15 +605,15 @@ class KnowledgeSimulationEngine {
     });
 
     if (currentStep.subnodoId) {
-      const activeEl = this.svg.querySelector("#" + currentStep.subnodoId);
+      const activeEl = this.svg.querySelector(`#${this.pfx}${currentStep.subnodoId}`);
       if (activeEl) {
         const shape = activeEl.querySelector("rect, polygon");
         if (shape) shape.style.filter = "drop-shadow(0 0 10px rgba(56, 189, 248, 0.8))";
       }
     }
 
-    // 4. Si es el paso de retroalimentación experiencial, activar pulso de retorno
-    const retroPulse = this.svg.querySelector("#retroPulseCircle");
+    // 4. Pulso de retorno experiencial si es el paso final
+    const retroPulse = this.svg.querySelector(`#${this.pfx}retroPulseCircle`);
     if (retroPulse) {
       if (currentStep.etapa === "retroalimentacion") {
         retroPulse.setAttribute("opacity", "1");
@@ -571,8 +624,8 @@ class KnowledgeSimulationEngine {
   }
 
   moveCapsule(step) {
-    const group = this.svg.querySelector("#knowledgeCapsuleGroup");
-    const renderer = this.svg.querySelector("#capsuleShapeRenderer");
+    const group = this.svg.querySelector(`#${this.pfx}knowledgeCapsuleGroup`);
+    const renderer = this.svg.querySelector(`#${this.pfx}capsuleShapeRenderer`);
     if (!group || !renderer) return;
 
     // Animación de posición
@@ -585,21 +638,21 @@ class KnowledgeSimulationEngine {
     switch (p.forma) {
       case "chispa-diamante":
         shapeSvg = `
-          <polygon points="0,-16 16,0 0,16 -16,0" fill="${p.color}" stroke="#ffffff" stroke-width="2" filter="url(#glow-cyan)"/>
+          <polygon points="0,-16 16,0 0,16 -16,0" fill="${p.color}" stroke="#ffffff" stroke-width="2" filter="url(#${this.pfx}glow-cyan)"/>
           <text y="4" text-anchor="middle" fill="#070b14" font-size="8.5" font-weight="900" font-family="'JetBrains Mono'">${p.etiqueta}</text>
         `;
         break;
 
       case "hexagono-tecnico":
         shapeSvg = `
-          <polygon points="0,-16 14,-8 14,8 0,16 -14,8 -14,-8" fill="${p.color}" stroke="#ffffff" stroke-width="2.2" filter="url(#glow-cyan)"/>
+          <polygon points="0,-16 14,-8 14,8 0,16 -14,8 -14,-8" fill="${p.color}" stroke="#ffffff" stroke-width="2.2" filter="url(#${this.pfx}glow-cyan)"/>
           <text y="4" text-anchor="middle" fill="#ffffff" font-size="8" font-weight="900" font-family="'JetBrains Mono'">${p.etiqueta}</text>
         `;
         break;
 
       case "escudo-esmeralda":
         shapeSvg = `
-          <circle r="16" fill="#059669" stroke="#34d399" stroke-width="2.5" filter="url(#glow-emerald)"/>
+          <circle r="16" fill="#059669" stroke="#34d399" stroke-width="2.5" filter="url(#${this.pfx}glow-emerald)"/>
           <circle r="6" fill="#ffffff" opacity="0.3"/>
           <text y="4" text-anchor="middle" fill="#ffffff" font-size="8" font-weight="900" font-family="'JetBrains Mono'">${p.etiqueta}</text>
         `;
@@ -607,7 +660,7 @@ class KnowledgeSimulationEngine {
 
       case "rombo-purpura":
         shapeSvg = `
-          <polygon points="0,-16 16,0 0,16 -16,0" fill="${p.color}" stroke="#f3e8ff" stroke-width="2.5" filter="url(#glow-purple)"/>
+          <polygon points="0,-16 16,0 0,16 -16,0" fill="${p.color}" stroke="#f3e8ff" stroke-width="2.5" filter="url(#${this.pfx}glow-purple)"/>
           <text y="4" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="900" font-family="'JetBrains Mono'">${p.etiqueta}</text>
         `;
         break;
@@ -615,7 +668,7 @@ class KnowledgeSimulationEngine {
       case "octagono-carmesi":
       case "archivo-leccion":
         shapeSvg = `
-          <polygon points="-7,-16 7,-16 16,-7 16,7 7,16 -7,16 -16,7 -16,-7" fill="${p.color}" stroke="#fecaca" stroke-width="2.5" filter="url(#glow-red)"/>
+          <polygon points="-7,-16 7,-16 16,-7 16,7 7,16 -7,16 -16,7 -16,-7" fill="${p.color}" stroke="#fecaca" stroke-width="2.5" filter="url(#${this.pfx}glow-red)"/>
           <text y="4" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="900" font-family="'JetBrains Mono'">${p.etiqueta}</text>
         `;
         break;
@@ -623,7 +676,7 @@ class KnowledgeSimulationEngine {
       case "cubo-dorado":
       case "boveda-dorada":
         shapeSvg = `
-          <rect x="-14" y="-14" width="28" height="28" rx="6" fill="#d97706" stroke="#fbbf24" stroke-width="3" filter="url(#glow-gold)"/>
+          <rect x="-14" y="-14" width="28" height="28" rx="6" fill="#d97706" stroke="#fbbf24" stroke-width="3" filter="url(#${this.pfx}glow-gold)"/>
           <text y="4" text-anchor="middle" fill="#070b14" font-size="8" font-weight="900" font-family="'JetBrains Mono'">${p.etiqueta}</text>
         `;
         break;
