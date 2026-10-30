@@ -400,7 +400,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "GAP",
             descripcionVisual: "Chispa ámbar parpadeante: representa una necesidad no resuelta en el entorno CUN."
           },
-          coords: { x: 90, y: 134 }
+          coords: { x: 89, y: 148 }
         },
         {
           etapa: "diagnostico",
@@ -416,7 +416,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "GAP-IND",
             descripcionVisual: "Tránsito por el eje de análisis de indicadores y retroalimentación bidireccional."
           },
-          coords: { x: 220, y: 159 }
+          coords: { x: 195, y: 202 }
         },
         {
           etapa: "diagnostico",
@@ -432,7 +432,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "KC",
             descripcionVisual: "Chispa azul cian luminosa: la brecha se convirtió en un Reclamo de Conocimiento (KC)."
           },
-          coords: { x: 220, y: 305 }
+          coords: { x: 263, y: 228 }
         },
         {
           etapa: "produccion",
@@ -448,7 +448,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "KC",
             descripcionVisual: "Tránsito por redes de aprendizaje individual y grupal."
           },
-          coords: { x: 361, y: 133 }
+          coords: { x: 382, y: 146 }
         },
         {
           etapa: "produccion",
@@ -464,7 +464,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "KC-FORM",
             descripcionVisual: "Formulación sistemática del reclamo para codificación."
           },
-          coords: { x: 361, y: 204 }
+          coords: { x: 382, y: 228 }
         },
         {
           etapa: "produccion",
@@ -480,7 +480,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "CKC",
             descripcionVisual: "MUTACIÓN: La partícula muta en un hexágono cian estructurado (Conocimiento Codificado)."
           },
-          coords: { x: 463, y: 204 }
+          coords: { x: 488, y: 228 }
         },
         {
           etapa: "produccion",
@@ -496,7 +496,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "CKC",
             descripcionVisual: "Hexágono cian superando la pre-evaluación interna hacia Filtración."
           },
-          coords: { x: 529, y: 204 }
+          coords: { x: 549, y: 228 }
         },
         {
           etapa: "filtracion",
@@ -512,7 +512,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "KCE",
             descripcionVisual: "Reposo en la compuerta del riel superior de filtración mientras el comité delibera."
           },
-          coords: { x: 615, y: 126 }
+          coords: { x: 657, y: 113 }
         },
         {
           etapa: "filtracion",
@@ -528,7 +528,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "SKC",
             descripcionVisual: "MUTACIÓN: Muta en un sello verde esmeralda resplandeciente (Superviviente certificado)."
           },
-          coords: { x: 695, y: 126 }
+          coords: { x: 659, y: 146 }
         },
         {
           etapa: "filtracion",
@@ -544,7 +544,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "SKC-VAL",
             descripcionVisual: "Sello esmeralda validado transitando hacia el nodo OK."
           },
-          coords: { x: 780, y: 126 }
+          coords: { x: 755, y: 146 }
         },
         {
           etapa: "filtracion",
@@ -560,7 +560,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "OK",
             descripcionVisual: "Sello OK institucional listo para integrarse a la memoria colectiva."
           },
-          coords: { x: 843, y: 166 }
+          coords: { x: 851, y: 228 }
         },
         {
           etapa: "integracion",
@@ -576,7 +576,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "COK",
             descripcionVisual: "MUTACIÓN: Muta en un cubo dorado de Conocimiento Organizacional Codificado (COK)."
           },
-          coords: { x: 996, y: 128 }
+          coords: { x: 975, y: 140 }
         },
         {
           etapa: "integracion",
@@ -592,7 +592,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "COK",
             descripcionVisual: "Cubo dorado resguardado en la infraestructura central."
           },
-          coords: { x: 996, y: 174 }
+          coords: { x: 975, y: 198 }
         },
         {
           etapa: "integracion",
@@ -608,7 +608,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "COK",
             descripcionVisual: "Cubo dorado emitiendo pulsos de transferencia formativa hacia los docentes."
           },
-          coords: { x: 996, y: 220 }
+          coords: { x: 975, y: 256 }
         },
         {
           etapa: "integracion",
@@ -624,7 +624,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "COK",
             descripcionVisual: "Diseminación a través de canales institucionales y bus colector hacia DOKB."
           },
-          coords: { x: 996, y: 266 }
+          coords: { x: 975, y: 314 }
         },
         {
           etapa: "integracion",
@@ -640,7 +640,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "DOKB",
             descripcionVisual: "MUTACIÓN FINAL: La partícula se asienta en la DOKB y genera ondas expansivas doradas en el repositorio institucional."
           },
-          coords: { x: 1007, y: 417 }
+          coords: { x: 965, y: 495 }
         },
         {
           etapa: "retroalimentacion",
@@ -656,7 +656,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "RETRO",
             descripcionVisual: "Flujo activo continuo de experiencia retornando desde la DOKB hasta el Diagnóstico por el ducto inferior."
           },
-          coords: { x: 85, y: 345 }
+          coords: { x: 89, y: 228 }
         }
       ]
     },
@@ -682,7 +682,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "GAP",
             descripcionVisual: "Chispa ámbar inicial de brecha detectada."
           },
-          coords: { x: 90, y: 134 }
+          coords: { x: 89, y: 148 }
         },
         {
           etapa: "diagnostico",
@@ -698,7 +698,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "STAKE",
             descripcionVisual: "Consulta con stakeholders del sector productivo."
           },
-          coords: { x: 220, y: 239 }
+          coords: { x: 195, y: 272 }
         },
         {
           etapa: "diagnostico",
@@ -714,7 +714,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "KC",
             descripcionVisual: "Chispa azul cian: Reclamo de conocimiento formulado."
           },
-          coords: { x: 220, y: 305 }
+          coords: { x: 263, y: 228 }
         },
         {
           etapa: "produccion",
@@ -730,7 +730,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "KC",
             descripcionVisual: "Tránsito por discusión y formulación pedagógica."
           },
-          coords: { x: 361, y: 204 }
+          coords: { x: 382, y: 228 }
         },
         {
           etapa: "produccion",
@@ -746,7 +746,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "CKC",
             descripcionVisual: "MUTACIÓN: La partícula muta en un hexágono cian estructurado."
           },
-          coords: { x: 463, y: 204 }
+          coords: { x: 488, y: 228 }
         },
         {
           etapa: "filtracion",
@@ -762,7 +762,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "KCE",
             descripcionVisual: "Ingreso al riel intermedio de filtración para reclamos en deliberación."
           },
-          coords: { x: 615, y: 191 }
+          coords: { x: 657, y: 195 }
         },
         {
           etapa: "filtracion",
@@ -778,7 +778,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "UKC",
             descripcionVisual: "MUTACIÓN: Muta en un rombo púrpura pulsante de alerta (Reclamo Indeciso en observación con plazo perentorio)."
           },
-          coords: { x: 695, y: 191 }
+          coords: { x: 659, y: 228 }
         },
         {
           etapa: "filtracion",
@@ -794,7 +794,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "DEPURA",
             descripcionVisual: "Tránsito por el lazo de depuración metodológica retornando a la red con plazo."
           },
-          coords: { x: 783, y: 210 }
+          coords: { x: 755, y: 243 }
         },
         {
           etapa: "filtracion",
@@ -810,7 +810,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "EV-POS",
             descripcionVisual: "MUTACIÓN: El reclamo depurado supera la prueba y muta a convalidación verde."
           },
-          coords: { x: 783, y: 167 }
+          coords: { x: 755, y: 213 }
         },
         {
           etapa: "filtracion",
@@ -826,7 +826,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "OK",
             descripcionVisual: "Veredicto consolidado OK hacia Integración."
           },
-          coords: { x: 843, y: 166 }
+          coords: { x: 851, y: 228 }
         },
         {
           etapa: "integracion",
@@ -842,7 +842,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "COK",
             descripcionVisual: "Muta a cubo dorado y se incorpora en el repositorio institucional permanente."
           },
-          coords: { x: 1007, y: 417 }
+          coords: { x: 965, y: 495 }
         },
         {
           etapa: "retroalimentacion",
@@ -858,7 +858,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "RETRO",
             descripcionVisual: "Ondas doradas fluyendo por el retorno experiencial hacia el Diagnóstico."
           },
-          coords: { x: 85, y: 345 }
+          coords: { x: 89, y: 228 }
         }
       ]
     },
@@ -884,7 +884,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "GAP",
             descripcionVisual: "Chispa ámbar: alerta presupuestal detectada."
           },
-          coords: { x: 90, y: 134 }
+          coords: { x: 89, y: 148 }
         },
         {
           etapa: "diagnostico",
@@ -900,7 +900,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "KC",
             descripcionVisual: "Chispa azul cian: reclamo de infraestructura formulado."
           },
-          coords: { x: 220, y: 305 }
+          coords: { x: 263, y: 228 }
         },
         {
           etapa: "produccion",
@@ -916,7 +916,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "KC",
             descripcionVisual: "Tránsito por investigación técnica de mercado y cotizaciones."
           },
-          coords: { x: 361, y: 275 }
+          coords: { x: 382, y: 310 }
         },
         {
           etapa: "produccion",
@@ -932,7 +932,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "CKC",
             descripcionVisual: "MUTACIÓN: Muta en hexágono cian estructurado de anteproyecto técnico."
           },
-          coords: { x: 463, y: 204 }
+          coords: { x: 488, y: 228 }
         },
         {
           etapa: "filtracion",
@@ -948,7 +948,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "KCE",
             descripcionVisual: "Reposo en evaluación rigurosa en el riel inferior de filtración."
           },
-          coords: { x: 615, y: 271 }
+          coords: { x: 657, y: 277 }
         },
         {
           etapa: "filtracion",
@@ -964,7 +964,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "FKC",
             descripcionVisual: "MUTACIÓN: Muta en un octágono carmesí con icono de alerta (Reclamo Falsado / Refutado)."
           },
-          coords: { x: 695, y: 271 }
+          coords: { x: 659, y: 310 }
         },
         {
           etapa: "filtracion",
@@ -980,7 +980,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "LECCIÓN",
             descripcionVisual: "La partícula carmesí se prepara para archivarse en el módulo de Lecciones Aprendidas de la DOKB."
           },
-          coords: { x: 785, y: 271 }
+          coords: { x: 755, y: 314 }
         },
         {
           etapa: "integracion",
@@ -996,7 +996,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "FKC-DOKB",
             descripcionVisual: "Asentamiento permanente en el repositorio de lecciones refutadas de la DOKB."
           },
-          coords: { x: 1092, y: 421 }
+          coords: { x: 965, y: 495 }
         },
         {
           etapa: "retroalimentacion",
@@ -1012,7 +1012,7 @@ window.CUN_GC_MODEL = {
             etiqueta: "ALERTA",
             descripcionVisual: "Flujo de advertencia de lección aprendida retornando al Diagnóstico para evitar tropiezos repetidos."
           },
-          coords: { x: 85, y: 345 }
+          coords: { x: 89, y: 228 }
         }
       ]
     }

@@ -333,10 +333,22 @@ body {
   transition: all var(--transition-fast);
 }
 
-.svg-subnode:hover rect {
-  fill: rgba(30, 58, 138, 0.7);
+.svg-subnode:hover rect,
+.svg-subnode:hover polygon {
   stroke: var(--cun-cyan);
   stroke-width: 2px;
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.4));
+}
+
+.svg-dokb-card {
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.svg-dokb-card:hover path {
+  stroke: var(--cun-gold-light);
+  stroke-width: 2.8px;
+  filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.6));
 }
 
 .svg-transversal-bar {
